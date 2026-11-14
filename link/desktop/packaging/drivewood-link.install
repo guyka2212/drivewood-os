@@ -1,0 +1,17 @@
+post_install() {
+  modprobe uinput 2>/dev/null || true
+  udevadm control --reload 2>/dev/null; udevadm trigger --subsystem-match=misc 2>/dev/null || true
+  if command -v ufw >/dev/null; then
+    ufw allow 47800/tcp comment 'DriveWood Link' >/dev/null 2>&1
+    ufw allow 47801/udp comment 'DriveWood Link discovery' >/dev/null 2>&1
+  fi
+  systemctl --global enable drivewood-link.service >/dev/null 2>&1 || true
+  echo "DriveWood Link installed. It starts with your next login, or run: drivewood-link"
+}
+post_upgrade() { post_install; }
+pre_remove() {
+  systemctl --global disable drivewood-link.service >/dev/null 2>&1 || true
+  if command -v ufw >/dev/null; then
+    ufw delete allow 47800/tcp >/dev/null 2>&1; ufw delete allow 47801/udp >/dev/null 2>&1
+  fi
+}

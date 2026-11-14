@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="a11y_description">Lets a computer signed in to your own DriveWood Link account control this phone, only during a session you accept on this phone. A banner with a Stop button is shown the whole time. Nothing is recorded or sent anywhere else.</string>
+</resources>

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=DriveWood Link
+GenericName=Send files and take control
+Comment=Send files and text to your own devices over Wi-Fi, and take control of them
+Exec=drivewood-link
+Icon=drivewood-link
+Categories=Network;FileTransfer;Utility;
+Keywords=send;share;files;phone;remote;control;
+StartupNotify=false

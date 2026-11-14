@@ -1,0 +1,6 @@
+[Unit]
+Description=Check for a new Drivewood release
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/drivewood-update-check

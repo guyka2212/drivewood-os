@@ -1,0 +1,4 @@
+#!/bin/sh
+# DriveWood Link launcher
+export PYTHONPATH=/usr/lib/drivewood-link${PYTHONPATH:+:$PYTHONPATH}
+exec python3 -m drivewood_link "$@"

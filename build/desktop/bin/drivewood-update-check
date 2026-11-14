@@ -1,0 +1,22 @@
+#!/bin/bash
+# drivewood-update-check: asks GitHub for the newest Drivewood release and writes
+# ~/.local/state/drivewood/update.json, which makes the bar show a small down arrow.
+REPO=guyka2212/drivewood-os
+S="$HOME/.local/state/drivewood"; mkdir -p "$S"
+CUR=$(cat /usr/share/drivewood/version 2>/dev/null || echo 0)
+curl -fsS --max-time 20 -H "Accept: application/vnd.github+json" \
+  "https://api.github.com/repos/$REPO/releases/latest" -o "$S/latest.json" || exit 0
+CUR="$CUR" OUT="$S/update.json" python3 - "$S/latest.json" <<'PY'
+import json, os, sys
+r = json.load(open(sys.argv[1]))
+def v(s):
+    try: return tuple(int(x) for x in str(s).lstrip("vV").split("."))
+    except ValueError: return (0,)
+latest, cur = r.get("tag_name", "0"), os.environ["CUR"]
+assets = {a["name"]: a["browser_download_url"] for a in r.get("assets", [])}
+pkg = next((n for n in assets if n.startswith("drivewood-update-") and n.endswith(".tar.gz")), None)
+info = {"available": bool(pkg) and v(latest) > v(cur), "current": cur, "version": latest.lstrip("vV"),
+        "notes": r.get("body", ""), "url": assets.get(pkg), "sha256_url": assets.get((pkg or "") + ".sha256")}
+json.dump(info, open(os.environ["OUT"], "w"), indent=2)
+print(("update available: " + latest) if info["available"] else ("up to date (" + cur + ")"))
+PY

@@ -1,0 +1,12 @@
+[Unit]
+Description=DriveWood Link (receive files, answer take-control requests)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/drivewood-link --background
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

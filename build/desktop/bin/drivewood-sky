@@ -1,0 +1,18 @@
+#!/bin/bash
+# drivewood-sky: match the wallpaper to the real time of day.
+#   dawn 05-08 · midday 08-17 · dusk 17-20 · night 20-05
+# A timer runs it every 5 minutes. It only switches when a new part of the day begins,
+# so a wallpaper you pick yourself stays until then. --force applies right now.
+BG=/usr/share/drivewood/backgrounds
+STATE="$HOME/.local/state/drivewood/sky.last"; mkdir -p "${STATE%/*}"
+h=$((10#$(date +%H)))
+if   (( h >= 5  && h < 8  )); then pick=1-dawn.png
+elif (( h >= 8  && h < 17 )); then pick=2-noon.png
+elif (( h >= 17 && h < 20 )); then pick=3-dusk.png
+else                               pick=4-night.png
+fi
+if [[ ${1:-} == --force || $(cat "$STATE" 2>/dev/null) != "$pick" ]]; then
+  drivewood-wallpaper set "$BG/$pick" >/dev/null && echo "$pick" > "$STATE" && echo "sky -> $pick"
+else
+  echo "still the same part of the day ($pick); leaving the wallpaper alone"
+fi

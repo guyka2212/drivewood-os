@@ -1,0 +1,6 @@
+#!/bin/bash
+# all-settings: open the Drivewood system menu.
+#   all-settings          open the main menu
+#   all-settings setup    open one section (setup, appearance, install, remove, update, learn, ...)
+if [ $# -eq 0 ]; then exec omarchy-menu toggle root; fi
+case "$1" in toggle|open|close|-*) exec omarchy-menu "$@";; *) exec omarchy-menu toggle "$@";; esac

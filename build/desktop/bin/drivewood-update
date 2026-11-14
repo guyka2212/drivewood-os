@@ -1,0 +1,45 @@
+#!/bin/bash
+# drivewood-update: installs the newest Drivewood release from GitHub.
+# Only Drivewood's own files are replaced. Your files, settings, apps and accounts stay as they are:
+# nothing in your home folder is deleted, and your own changes (custom.lua, Settings choices,
+# hypridle timers, Link sign-in, Documents, Pictures...) are never touched.
+if [ ! -t 0 ]; then exec foot --title "Drivewood update" "$0" "$@"; fi
+set -e
+S="$HOME/.local/state/drivewood"; W="$HOME/.cache/drivewood-update"
+finish() { echo; read -rp "Press Enter to close. " _; }
+trap finish EXIT
+drivewood-update-check >/dev/null || true
+eval "$(python3 -c 'import json,shlex;u=json.load(open("'"$S"'/update.json"));[print(k.upper()+"="+shlex.quote(str(u.get(k) or ""))) for k in ("available","version","url","sha256_url","current")]')"
+if [ "$AVAILABLE" != "True" ]; then echo "Drivewood $CURRENT is up to date."; exit 0; fi
+echo "== Drivewood $CURRENT -> $VERSION"
+python3 -c 'import json;print(json.load(open("'"$S"'/update.json")).get("notes",""))' | sed 's/^/   /'
+echo
+read -rp "Install this update now? [Y/n] " ok; [[ ${ok,,} == n* ]] && exit 0
+rm -rf "$W"; mkdir -p "$W"; cd "$W"
+echo "== downloading"
+curl -fL --progress-bar -o update.tar.gz "$URL"
+curl -fsSL -o update.tar.gz.sha256 "$SHA256_URL"
+echo "$(cut -d' ' -f1 update.tar.gz.sha256)  update.tar.gz" | sha256sum -c - || { echo "Checksum mismatch, nothing was installed."; exit 1; }
+tar xzf update.tar.gz
+echo "== installing (asks for your password)"
+sudo bash -e -c "
+  pacman -Syu --needed --noconfirm \$(cat '$W/packages.txt')
+  tar xzf '$W/stage.tar.gz' --no-same-owner -C / --exclude=./etc/skel/.config/hypr/hypridle.conf
+  chmod 755 /usr/bin/drivewood-*
+  ln -sf ../usr/lib/os-release /etc/os-release
+  plymouth-set-default-theme drivewood
+  mkinitcpio -P >/dev/null
+"
+echo "== DriveWood Link"
+mkdir -p "$W/link" && tar xzf "$W/link.tar.gz" -C "$W/link"
+( cd "$W/link/packaging" && makepkg -f --nodeps >/dev/null 2>&1 ) && sudo pacman -U --noconfirm "$W"/link/packaging/drivewood-link-*.pkg.tar.zst >/dev/null
+echo "== your desktop files (only Drivewood's own; your changes stay)"
+for f in hypr/hyprland.lua hypr/hyprlock.conf foot/foot.ini mako/config fastfetch/config.jsonc starship.toml; do
+  install -D -m 644 "/etc/skel/.config/$f" "$HOME/.config/$f"
+done
+hyprctl reload >/dev/null 2>&1 || true
+pkill -f "qs -n -p /usr/share/drivewood/shell" || true; sleep 0.5
+setsid -f qs -n -p /usr/share/drivewood/shell >/dev/null 2>&1
+drivewood-update-check >/dev/null || true
+notify-send -a Drivewood "Drivewood updated" "Now on $VERSION" || true
+echo "== Drivewood $VERSION installed. Restart if the kernel was updated."

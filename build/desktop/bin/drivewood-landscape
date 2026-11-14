@@ -1,0 +1,2 @@
+#!/bin/bash
+exec foot --title "Landscape" python3 /usr/share/drivewood/apps/landscape.py

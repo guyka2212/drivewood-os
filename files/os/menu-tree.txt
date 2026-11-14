@@ -1,0 +1,411 @@
+apps | Apps *
+learn | Learn 
+  learn.keybindings | Keybindings *
+  learn.omarchy | Omarchy *  <<OMARCHY
+  learn.hyprland | Hyprland *
+  learn.arch | Arch *
+  learn.neovim | Neovim *
+  learn.bash | Bash *
+  learn.tmux-keybindings | Tmux *
+  learn.herdr-keybindings | Herdr *
+  learn.community | Community *
+appearance | Appearance 
+  appearance.theme | Theme *
+  appearance.background | Background *
+  appearance.font | Font 
+  appearance.top-bar | Menu Bar 
+    appearance.top-bar.hide | Hide Bar *
+    appearance.top-bar.show | Show Bar *
+    appearance.top-bar.position | Position Bar 
+      appearance.top-bar.position.top | Top Bar *
+      appearance.top-bar.position.bottom | Bottom Bar *
+      appearance.top-bar.position.left | Left Bar *
+      appearance.top-bar.position.right | Right Bar *
+    appearance.top-bar.background | Bar Background 
+      appearance.top-bar.background.opaque | Opaque Bar *
+      appearance.top-bar.background.glassy | Glassy Bar *
+      appearance.top-bar.background.clear | Clear Bar *
+    appearance.top-bar.indicators | Bar Indicators 
+      appearance.top-bar.indicators.battery-percentage-on | Show Battery % *
+      appearance.top-bar.indicators.battery-percentage-off | Hide Battery % *
+      appearance.top-bar.indicators.clock | Clock 
+  appearance.windows | Windows 
+    appearance.windows.gaps-on | Window Gaps On *
+    appearance.windows.gaps-off | Window Gaps Off *
+    appearance.windows.corners | Window Corners 
+      appearance.windows.corners.theme | Theme Corners *
+      appearance.windows.corners.sharp | Sharp Corners *
+      appearance.windows.corners.rounded | Rounded Corners *
+    appearance.windows.transparency | Window Opacity 
+      appearance.windows.transparency.opaque | Opaque Windows *
+      appearance.windows.transparency.transparent | Transparent Windows *
+      appearance.windows.transparency.glassy | Glassy Windows *
+    appearance.windows.one-window-ratio-on | 1-Window Ratio On *
+    appearance.windows.one-window-ratio-off | 1-Window Ratio Off *
+  appearance.branding | Branding 
+    appearance.branding.screensaver | Screensaver 
+      appearance.branding.screensaver.text | Edit Text *
+      appearance.branding.screensaver.image | Set From Image *
+      appearance.branding.screensaver.default | Restore Default *
+    appearance.branding.about | About 
+      appearance.branding.about.text | Edit Text *
+      appearance.branding.about.image | Set From Image *
+      appearance.branding.about.default | Restore Default *
+  appearance.dock | Dock 
+    appearance.dock.autohide | Auto-hide Dock *
+    appearance.dock.always-on | Always-on Dock *
+    appearance.dock.position | Dock Position 
+      appearance.dock.position.top | Top Dock *
+      appearance.dock.position.bottom | Bottom Dock *
+      appearance.dock.position.left | Left Dock *
+      appearance.dock.position.right | Right Dock *
+  appearance.workspace-layout | Workspace Layout 
+    appearance.workspace-layout.dwindle | Tiling *
+    appearance.workspace-layout.scrolling | Scrolling *
+    appearance.workspace-layout.floating | Floating *
+  appearance.animations-on | Animations On *
+  appearance.animations-off | Animations Off *
+  appearance.unlock | Unlock *
+trigger | Trigger 
+  trigger.toggle | Toggle 
+    trigger.toggle.idle-lock-on | Stay Awake *
+    trigger.toggle.idle-lock-off | Allow Sleep *
+    trigger.toggle.notifications-on | Notifications On *
+    trigger.toggle.notifications-off | Silence Notifications *
+    trigger.toggle.nightlight-on | Nightlight On *
+    trigger.toggle.nightlight-off | Nightlight Off *
+    trigger.toggle.screensaver-on | Screensaver On *
+    trigger.toggle.screensaver-off | Screensaver Off *
+    trigger.toggle.crash-capture-on | Crash Capture On *
+    trigger.toggle.crash-capture-off | Crash Capture Off *
+  trigger.emoji | Emoji *
+  trigger.clipboard-history | Clipboard History *
+  trigger.reminder | Reminder 
+    trigger.reminder.set | Set one *
+    trigger.reminder.show | Show all *
+    trigger.reminder.clear | Clear all *
+  trigger.capture | Capture 
+    trigger.capture.screenshot | Screenshot *
+    trigger.capture.screenrecord | Screenrecord 
+      trigger.capture.screenrecord.stop | Stop Screenrecording *
+      trigger.capture.screenrecord.no-audio | With no audio *
+      trigger.capture.screenrecord.desktop-audio | With desktop audio *
+      trigger.capture.screenrecord.microphone | With desktop + microphone audio *
+      trigger.capture.screenrecord.webcam | With desktop + microphone audio + webcam *
+    trigger.capture.text | Text *
+    trigger.capture.qr | QR Code *
+    trigger.capture.color | Color *
+  trigger.transcode | Transcode *
+  trigger.share | Share 
+    trigger.share.clipboard | Clipboard *
+    trigger.share.file | File *
+    trigger.share.folder | Folder *
+    trigger.share.receive | Receive *
+  trigger.hardware | Hardware 
+    trigger.hardware.laptop-display-on | Laptop Display On *
+    trigger.hardware.laptop-display-off | Laptop Display Off *
+    trigger.hardware.mirror-display-on | Display Mirroring On *
+    trigger.hardware.mirror-display-off | Display Mirroring Off *
+    trigger.hardware.hybrid-gpu-on | Switch to Hybrid GPU *
+    trigger.hardware.hybrid-gpu-off | Switch to Integrated GPU *
+    trigger.hardware.touchpad-on | Enable Touchpad *
+    trigger.hardware.touchpad-off | Disable Touchpad *
+    trigger.hardware.touchpad-haptics | Touchpad Haptics 
+      trigger.hardware.touchpad-haptics.low | low *
+      trigger.hardware.touchpad-haptics.mid | mid *
+      trigger.hardware.touchpad-haptics.high | high *
+    trigger.hardware.touchscreen-on | Enable Touchscreen *
+    trigger.hardware.touchscreen-off | Disable Touchscreen *
+  trigger.tests | Speed Test 
+    trigger.tests.network-speedtest | Network Speed Test *
+    trigger.tests.disk-speedtest | Disk Speed Test *
+setup | Setup 
+  setup.monitors | Monitors *
+  setup.keybindings | Keybindings *
+  setup.input | Input *
+  setup.typing | Typing 
+    setup.typing.keyboard | Keyboard Layouts *
+    setup.typing.input | Input Methods *
+  setup.language | Language 
+  setup.network | Network 
+    setup.network.dns | DNS 
+      setup.network.dns.dhcp | DHCP *
+      setup.network.dns.cloudflare | Cloudflare *
+      setup.network.dns.google | Google *
+      setup.network.dns.custom | Custom *
+    setup.network.qr | QR Code *
+  setup.default | Defaults 
+    setup.default.agent | Agent 
+      setup.default.agent.amp | Amp *
+      setup.default.agent.agy | Antigravity *
+      setup.default.agent.claude | Claude *
+      setup.default.agent.codex | Codex *
+      setup.default.agent.commandcode | Command Code *
+      setup.default.agent.copilot | Copilot *
+      setup.default.agent.crush | Crush *
+      setup.default.agent.cursor-agent | Cursor CLI *
+      setup.default.agent.dsh | DeepSeek Harness *
+      setup.default.agent.devin | Devin CLI *
+      setup.default.agent.freebuff | Freebuff *
+      setup.default.agent.grok | Grok *
+      setup.default.agent.hermes | Hermes *
+      setup.default.agent.kilo | Kilo *
+      setup.default.agent.kimi | Kimi *
+      setup.default.agent.kiro-cli | Kiro CLI *
+      setup.default.agent.mcode | MiniMax Code *
+      setup.default.agent.muse | Muse Code *
+      setup.default.agent.omp | omp *
+      setup.default.agent.openclaw | OpenClaw *
+      setup.default.agent.opencode | OpenCode *
+      setup.default.agent.ori | Ori *
+      setup.default.agent.pi | Pi *
+      setup.default.agent.qwen | Qwen Code *
+    setup.default.browser | Browser 
+      setup.default.browser.chromium | Chromium *
+      setup.default.browser.chrome | Chrome *
+      setup.default.browser.brave | Brave *
+      setup.default.browser.brave-origin | Brave Origin *
+      setup.default.browser.edge | Edge *
+      setup.default.browser.firefox | Firefox *
+      setup.default.browser.zen | Zen *
+    setup.default.dictation | Dictation 
+      setup.default.dictation.superwhisper | Superwhisper *
+      setup.default.dictation.voxtype | Voxtype *
+    setup.default.terminal | Terminal 
+      setup.default.terminal.alacritty | Alacritty *
+      setup.default.terminal.foot | Foot *
+      setup.default.terminal.ghostty | Ghostty *
+      setup.default.terminal.kitty | Kitty *
+    setup.default.editor | Editor 
+      setup.default.editor.neovim | Neovim *
+      setup.default.editor.vscode | VSCode *
+      setup.default.editor.cursor | Cursor *
+      setup.default.editor.zed | Zed *
+      setup.default.editor.sublime | Sublime Text *
+      setup.default.editor.helix | Helix *
+      setup.default.editor.vim | Vim *
+      setup.default.editor.emacs | Emacs *
+  setup.plugin | Plugins 
+    setup.plugin.enable | Enable Plugin *
+    setup.plugin.disable | Disable Plugin *
+    setup.plugin.add | Add Plugin *
+    setup.plugin.clone | Clone Plugin *
+    setup.plugin.remove | Remove Plugin *
+  setup.security | Security 
+    setup.security.fingerprint | Fingerprint *
+    setup.security.fido2 | Fido2 *
+    setup.security.sshd | SSHD *
+    setup.security.ssh-agent | SSH Agent *
+    setup.security.sudoless-docker | Sudoless Docker *
+    setup.security.passwordless-sudo | Passwordless Sudo *
+  setup.config | Config 
+    setup.config.git | Git *
+    setup.config.hyprland | Hyprland *
+    setup.config.hyprsunset | Hyprsunset *
+    setup.config.xcompose | XCompose *
+  setup.direct-boot | Direct Boot *
+  setup.reset | Reset Computer *
+install | Install 
+  install.package | Package *
+  install.ai | AI 
+    install.ai.amp | Amp Desktop *
+    install.ai.chatgpt | ChatGPT Desktop *
+    install.ai.claude | Claude Desktop *
+    install.ai.grok-bot | Grok Bot *
+    install.ai.hermes | Hermes Desktop *
+    install.ai.lm-studio | LM Studio *
+    install.ai.ollama | Ollama *
+    install.ai.openclaw | OpenClaw *
+    install.ai.perplexity | Perplexity *
+    install.ai.t3-code | T3 Code *
+  install.service | Service 
+    install.service.1password | 1Password *
+    install.service.bitwarden | Bitwarden *
+    install.service.chromium-account | Chromium Account *
+    install.service.dropbox | Dropbox *
+    install.service.microsoft | Microsoft *
+    install.service.nordvpn | NordVPN *
+    install.service.notion | Notion *
+    install.service.once | ONCE *
+    install.service.signal | Signal *
+    install.service.slack | Slack *
+    install.service.spotify | Spotify *
+    install.service.tailscale | Tailscale *
+  install.development | Development 
+    install.development.rails | Ruby on Rails *
+    install.development.docker-dbs | Docker DB *
+    install.development.javascript | JavaScript 
+      install.development.javascript.node | Node.js *
+      install.development.javascript.bun | Bun *
+      install.development.javascript.deno | Deno *
+    install.development.go | Go *
+    install.development.php | PHP 
+      install.development.php.php | PHP *
+      install.development.php.laravel | Laravel *
+      install.development.php.symfony | Symfony *
+    install.development.python | Python *
+    install.development.elixir | Elixir 
+      install.development.elixir.elixir | Elixir *
+      install.development.elixir.phoenix | Phoenix *
+    install.development.zig | Zig *
+    install.development.rust | Rust *
+    install.development.java | Java *
+    install.development.dotnet | .NET *
+    install.development.ocaml | OCaml *
+    install.development.clojure | Clojure *
+    install.development.scala | Scala *
+  install.editor | Editor 
+    install.editor.vscode | VSCode *
+    install.editor.cursor | Cursor *
+    install.editor.zed | Zed *
+    install.editor.sublime | Sublime Text *
+    install.editor.helix | Helix *
+    install.editor.vim | Vim *
+    install.editor.emacs | Emacs *
+  install.style | Style 
+    install.style.theme | Theme *
+    install.style.background | Background *
+    install.style.font | Font 
+      install.style.font.cascadia | Cascadia Mono *
+      install.style.font.meslo | Meslo LG Mono *
+      install.style.font.fira | Fira Code *
+      install.style.font.victor | Victor Code *
+      install.style.font.bitstream | Bitstream Vera Mono *
+      install.style.font.iosevka | Iosevka *
+  install.gaming | Gaming 
+    install.gaming.steam | Steam *
+    install.gaming.retroarch | RetroArch *
+    install.gaming.minecraft | Minecraft *
+    install.gaming.geforce-now | NVIDIA GeForce NOW *
+    install.gaming.xbox-cloud | Xbox Cloud Gaming *
+    install.gaming.xbox-controllers | Xbox Controllers *
+    install.gaming.battlenet | Battle.net *
+    install.gaming.lutris | Lutris *
+    install.gaming.heroic | Heroic (Epic Games) *
+    install.gaming.retro-launcher | RetroArch Game Launcher *
+  install.browser | Browser 
+    install.browser.chrome | Chrome *
+    install.browser.edge | Edge *
+    install.browser.brave | Brave *
+    install.browser.brave-origin | Brave Origin *
+    install.browser.firefox | Firefox *
+    install.browser.zen | Zen *
+  install.webapp | Web App *
+  install.terminal | Terminal 
+    install.terminal.alacritty | Alacritty *
+    install.terminal.foot | Foot *
+    install.terminal.ghostty | Ghostty *
+    install.terminal.kitty | Kitty *
+  install.tui | TUI *
+  install.windows | Windows *
+  install.aur | AUR *
+  install.preinstalls | Preinstalls *
+remove | Remove 
+  remove.package | Package *
+  remove.ai | AI 
+    remove.ai.hermes | Hermes Desktop *
+    remove.ai.amp | Amp Desktop *
+    remove.ai.chatgpt | ChatGPT Desktop *
+    remove.ai.claude | Claude Desktop *
+    remove.ai.grok-bot | Grok Bot *
+    remove.ai.lm-studio | LM Studio *
+    remove.ai.ollama | Ollama *
+    remove.ai.openclaw | OpenClaw *
+    remove.ai.perplexity | Perplexity *
+    remove.ai.t3-code | T3 Code *
+  remove.dictation | Dictation 
+    remove.dictation.superwhisper | Superwhisper *
+    remove.dictation.voxtype | Voxtype *
+  remove.service | Services 
+    remove.service.1password | 1Password *
+    remove.service.dropbox | Dropbox *
+    remove.service.tailscale | Tailscale *
+    remove.service.microsoft | Microsoft *
+    remove.service.ssh-agent | SSH Agent *
+  remove.development | Development 
+    remove.development.rails | Ruby on Rails *
+    remove.development.javascript | JavaScript 
+      remove.development.javascript.node | Node.js *
+      remove.development.javascript.bun | Bun *
+      remove.development.javascript.deno | Deno *
+    remove.development.go | Go *
+    remove.development.php | PHP 
+      remove.development.php.php | PHP *
+      remove.development.php.laravel | Laravel *
+      remove.development.php.symfony | Symfony *
+    remove.development.python | Python *
+    remove.development.elixir | Elixir 
+      remove.development.elixir.elixir | Elixir *
+      remove.development.elixir.phoenix | Phoenix *
+    remove.development.zig | Zig *
+    remove.development.rust | Rust *
+    remove.development.java | Java *
+    remove.development.dotnet | .NET *
+    remove.development.ocaml | OCaml *
+    remove.development.clojure | Clojure *
+    remove.development.scala | Scala *
+  remove.theme | Theme *
+  remove.gaming | Gaming 
+    remove.gaming.steam | Steam *
+    remove.gaming.retroarch | RetroArch *
+    remove.gaming.minecraft | Minecraft *
+    remove.gaming.geforce-now | NVIDIA GeForce NOW *
+    remove.gaming.xbox-cloud | Xbox Cloud Gaming *
+    remove.gaming.xbox-controllers | Xbox Controllers (󰂯) *
+    remove.gaming.battlenet | Battle.net *
+    remove.gaming.lutris | Lutris *
+    remove.gaming.heroic | Heroic (Epic Games) *
+  remove.browser | Browser 
+    remove.browser.chrome | Chrome *
+    remove.browser.edge | Edge *
+    remove.browser.brave | Brave *
+    remove.browser.brave-origin | Brave Origin *
+    remove.browser.firefox | Firefox *
+    remove.browser.zen | Zen *
+  remove.webapp | Web App *
+  remove.tui | TUI *
+  remove.windows | Windows *
+  remove.preinstalls | Preinstalls *
+  remove.security | Security 
+    remove.security.fingerprint | Fingerprint *
+    remove.security.fido2 | Fido2 *
+    remove.security.sshd | SSHD *
+    remove.security.sudoless-docker | Sudoless Docker *
+update | Update 
+  update.omarchy | Omarchy *  <<OMARCHY
+  update.channel | Channel 
+    update.channel.stable | Stable *
+    update.channel.rc | RC *
+    update.channel.edge | Edge *
+    update.channel.dev | Dev *
+  update.kernel | Kernel 
+  update.config | Config 
+    update.config.hyprland | Hyprland *
+    update.config.hyprsunset | Hyprsunset *
+    update.config.plymouth | Plymouth *
+    update.config.tmux | Tmux *
+    update.config.shell | Shell *
+  update.themes | Extra Themes *
+  update.process | Process 
+    update.process.hyprsunset | Hyprsunset *
+    update.process.shell | Shell *
+  update.hardware | Hardware 
+    update.hardware.audio | Audio *
+    update.hardware.wifi | Wi-Fi *
+    update.hardware.bluetooth | Bluetooth *
+    update.hardware.trackpad | Trackpad *
+  update.firmware | Firmware *
+  update.password | Password 
+    update.password.drive | Drive Encryption *
+    update.password.user | User *
+  update.timezone | Timezone *
+  update.time | Time *
+about | About *
+system | System 
+  system.screensaver | Screensaver *
+  system.lock | Lock *
+  system.suspend | Suspend *
+  system.hibernate | Hibernate *
+  system.logout | Logout *
+  system.reboot | Reboot *
+  system.shutdown | Shutdown *

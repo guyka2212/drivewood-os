@@ -1,0 +1,23 @@
+# DriveWood Link for Drivewood (Arch Linux)
+pkgname=drivewood-link
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Send files and text to your own devices over Wi-Fi, and take control of them"
+arch=('any')
+license=('custom')
+depends=('python' 'python-gobject' 'gtk4' 'openssl' 'grim' 'wl-clipboard' 'libnotify')
+install=drivewood-link.install
+source=()
+
+package() {
+  local src="$startdir/.."
+  install -d "$pkgdir/usr/lib/drivewood-link"
+  cp -r "$src/drivewood_link" "$pkgdir/usr/lib/drivewood-link/"
+  find "$pkgdir/usr/lib/drivewood-link" -name '__pycache__' -prune -exec rm -rf {} +
+  install -Dm755 "$startdir/drivewood-link" "$pkgdir/usr/bin/drivewood-link"
+  install -Dm644 "$startdir/drivewood-link.desktop" "$pkgdir/usr/share/applications/drivewood-link.desktop"
+  install -Dm644 "$startdir/drivewood-link.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/drivewood-link.svg"
+  install -Dm644 "$startdir/drivewood-link.service" "$pkgdir/usr/lib/systemd/user/drivewood-link.service"
+  install -Dm644 "$startdir/70-drivewood-link-uinput.rules" "$pkgdir/usr/lib/udev/rules.d/70-drivewood-link-uinput.rules"
+  install -Dm644 "$startdir/drivewood-link-uinput.conf" "$pkgdir/usr/lib/modules-load.d/drivewood-link-uinput.conf"
+}

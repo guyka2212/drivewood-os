@@ -1,0 +1,16 @@
+# build output (published as release files, not in git)
+build/stage/
+build/stage.tar.gz
+dist/
+*.iso
+link/drivewood-link-desktop.tar.gz
+# Android build files and local paths
+link/android/.gradle/
+link/android/build/
+link/android/app/build/
+link/android/local.properties
+link/android/.idea/
+*.apk
+# Python caches
+__pycache__/
+*.pyc

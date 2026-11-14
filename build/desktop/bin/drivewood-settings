@@ -1,0 +1,3 @@
+#!/bin/bash
+# drivewood-settings [page]   e.g. drivewood-settings network
+exec python3 /usr/share/drivewood/settings/drivewood_settings.py "$@"

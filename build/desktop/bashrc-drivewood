@@ -1,0 +1,13 @@
+
+# ---- Drivewood ----
+eval "$(starship init bash)"
+drivewood_greet() {
+  local h=$((10#$(date +%H))) icon msg
+  if   (( h >= 5  && h < 8  )); then icon=$'\U000F059C'; msg="dawn over the lake"
+  elif (( h >= 8  && h < 17 )); then icon=$'\U000F0599'; msg="clear skies over the ridge"
+  elif (( h >= 17 && h < 20 )); then icon=$'\U000F059B'; msg="the peaks are turning pink"
+  else                               icon=$'\U000F0594'; msg="stars over the water"; fi
+  printf '\e[38;2;143;180;230m%s\e[0m  \e[38;2;125;127;143m%s, %s\e[0m\n' "$icon" "$msg" "$USER"
+}
+[[ $- == *i* && -z $DRIVEWOOD_QUIET ]] && drivewood_greet
+alias ff=fastfetch

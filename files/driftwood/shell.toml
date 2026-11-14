@@ -1,0 +1,143 @@
+# Driftwood shell surfaces: dusk-glass cards with a sunrise-to-dusk gradient edge.
+
+[bar]
+# Deep lake navy, a little see-through so the blurred wallpaper glows behind it.
+background       = "#0f1118"
+background-alpha = 0.78
+text             = "#f4ecdd"
+active           = "#e8746a"
+scale-with-font  = true
+size-horizontal  = 30
+size-vertical    = 32
+
+[hyprland]
+# The same sunrise-peach to dusk-violet gradient as the focused window border.
+active-border            = "rgba(8fb4e6ee) rgba(6ac8dcee) 45deg"
+active-border-foreground = "rgba(8fb4e699) rgba(86c4c099) 45deg"
+
+[controls]
+normal-color        = "#e6dccb"
+normal-fill-alpha   = 0.03
+normal-border       = "#e6dccb"
+normal-border-width = 1
+normal-border-alpha = 0.22
+
+# Hover and keyboard cursor glow peach instead of grey.
+hover-cursor-color        = "#8fb4e6"
+hover-cursor-fill-alpha   = 0.14
+hover-cursor-border       = "#8fb4e6"
+hover-cursor-border-width = 1
+hover-cursor-border-alpha = 0.55
+
+focus-color        = "#8fb4e6"
+focus-fill-alpha   = 0.14
+focus-border       = "#8fb4e6"
+focus-border-width = 1
+focus-border-alpha = 0.55
+
+selected-color        = "#8fb4e6"
+selected-fill-alpha   = 0.20
+selected-border       = "#8fb4e6"
+selected-border-width = 0
+selected-border-alpha = 1.0
+
+pressed-fill-alpha   = 0.26
+selection-fill-alpha = 0.35
+
+[spacing]
+# A little roomier everywhere; taller rows in the menu and the Apps window.
+scale = 1.12
+scale-with-font = true
+popup-row-height = 34
+popup-padding    = 18
+panel-padding    = 22
+row-padding-x    = 14
+
+[font]
+base-size = 13
+
+[popups]
+background       = "#0f1118"
+background-alpha = 0.92
+text             = "#e6dccb"
+border           = "hyprland.active-border"
+border-alpha     = 1.0
+border-width     = 2
+
+[tooltip]
+background       = "#0f1118"
+background-alpha = 0.95
+text             = "#f4ecdd"
+border           = "#8fb4e6"
+border-alpha     = 0.6
+
+[notifications]
+background       = "#0f1118"
+background-alpha = 0.94
+text             = "#e6dccb"
+border           = "hyprland.active-border"
+border-alpha     = 1.0
+border-width     = 2
+countdown        = "#8fb4e6"
+
+[launcher]
+background                = "#0f1118"
+background-alpha          = 0.88
+text                      = "#e6dccb"
+border                    = "hyprland.active-border"
+border-alpha              = 1.0
+scrim                     = "#07080d"
+scrim-alpha               = 0.6
+selected-background       = "#8fb4e6"
+selected-background-alpha = 0.16
+selected-text             = "#f4ecdd"
+selected-border           = "#8fb4e6"
+selected-border-alpha     = 0.75
+
+[menu]
+# The Super menu and the Apps window: dusk glass over a deep dusk wash.
+background                = "#0f1118"
+background-alpha          = 0.90
+text                      = "#e6dccb"
+border                    = "hyprland.active-border"
+border-alpha              = 1.0
+border-width              = 2
+scrim                     = "#0a0c18"
+scrim-alpha               = 0.62
+selected-background       = "#8fb4e6"
+selected-background-alpha = 0.16
+selected-text             = "#f4ecdd"
+selected-border           = "#8fb4e6"
+selected-border-alpha     = 0.75
+
+[polkit]
+background       = "#0f1118"
+background-alpha = 0.94
+text             = "#e6dccb"
+text-error       = "#e8746a"
+border           = "hyprland.active-border"
+border-error     = "#e8746a"
+border-alpha     = 1.0
+scrim            = "#0a0c18"
+scrim-alpha      = 0.62
+accent           = "#8fb4e6"
+
+[lock]
+background       = "#0f1118"
+background-alpha = 0.8
+text             = "#e6dccb"
+placeholder      = "#7d7f8f"
+text-error       = "#e8746a"
+border           = "#5b5e72"
+border-active    = "#8fb4e6"
+border-error     = "#e8746a"
+border-alpha     = 1.0
+selection        = "#8fb4e6"
+selection-alpha  = 0.45
+
+[image-picker]
+text                    = "#e6dccb"
+selected-border         = "#8fb4e6"
+selected-border-alpha   = 1.0
+unselected-border       = "#e6dccb"
+unselected-border-alpha = 0.28

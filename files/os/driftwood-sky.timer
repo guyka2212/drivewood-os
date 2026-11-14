@@ -1,0 +1,11 @@
+[Unit]
+Description=Check the Driftwood sky every few minutes
+PartOf=graphical-session.target
+
+[Timer]
+OnActiveSec=15s
+OnCalendar=*:0/5
+Persistent=false
+
+[Install]
+WantedBy=graphical-session.target

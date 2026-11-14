@@ -1,0 +1,11 @@
+[Plymouth Theme]
+Name=Drivewood
+Description=Rain resolving into DRIVEWOOD, the screensaver animation.
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/driftwood
+ScriptFile=/usr/share/plymouth/themes/driftwood/driftwood.script
+ConsoleLogBackgroundColor=0x000000
+MonospaceFont=Cantarell 11
+Font=Cantarell 11

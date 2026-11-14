@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "driftwood.menu",
+  "name": "Driftwood menu",
+  "version": "1.0.0",
+  "author": "Driftwood",
+  "description": "Opens the menu from a pine in the bar",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Driftwood menu",
+    "description": "A pine that opens the menu (right-click opens a terminal)",
+    "category": "Compositor",
+    "allowMultiple": false,
+    "defaultSection": "left"
+  }
+}

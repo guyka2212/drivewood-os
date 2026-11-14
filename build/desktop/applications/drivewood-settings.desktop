@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Settings
+Comment=Drivewood system settings
+Exec=drivewood-settings
+Icon=preferences-system
+Categories=Settings;System;

@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+"""drivewood-palette: derive the desktop's accent colours from the current wallpaper.
+
+Writes ~/.local/state/drivewood/palette.json ({accent, accent2, bg, source}) for the
+Drivewood shell, and recolours the focused-window border gradient to match.
+Usage: drivewood-palette [image]   (defaults to the current wallpaper)
+"""
+import colorsys, json, os, re, subprocess, sys
+
+home = os.path.expanduser("~")
+img = sys.argv[1] if len(sys.argv) > 1 else os.path.realpath(f"{home}/.local/state/drivewood/background")
+
+hist = subprocess.run(
+    ["magick", img + "[0]", "-resize", "96x60!", "-colors", "8", "-format", "%c", "histogram:info:-"],
+    capture_output=True, text=True).stdout
+colors = []
+for line in hist.splitlines():
+    m = re.match(r"\s*(\d+):.*?#([0-9A-Fa-f]{6})", line)
+    if m:
+        colors.append((int(m.group(1)), tuple(int(m.group(2)[i:i + 2], 16) / 255 for i in (0, 2, 4))))
+
+def hls(c):
+    return colorsys.rgb_to_hls(*c)
+
+def presence(count, c):
+    # how much a colour defines the picture: area, nudged by saturation;
+    # near-black and near-white count for little
+    h, l, s = hls(c)
+    usable = 1.0 if 0.2 < l < 0.9 else 0.2
+    return s ** 0.6 * count * usable
+
+def readable(c, lightness, sat_lo=0.40, sat_hi=0.70):
+    h, l, s = hls(c)
+    return colorsys.hls_to_rgb(h, lightness, min(max(s, sat_lo), sat_hi))
+
+def hue_gap(a, b):
+    d = abs(a - b)
+    return min(d, 1 - d)
+
+def to_hex(c):
+    return "#%02x%02x%02x" % tuple(max(0, min(255, round(v * 255))) for v in c)
+
+if colors:
+    ranked = sorted(colors, key=lambda x: -presence(*x))
+    base = ranked[0][1]
+    h0, _, s0 = hls(base)
+    accent = readable(base, 0.72)
+    # a neighbouring hue keeps the palette in one family
+    accent2 = colorsys.hls_to_rgb((h0 - 0.06) % 1, 0.64, min(max(s0, 0.40), 0.62))
+    dark = min(colors, key=lambda x: hls(x[1])[1])[1]
+    hd, _, sd = hls(dark)
+    bg = colorsys.hls_to_rgb(hd, 0.075, min(sd, 0.32))
+else:  # no wallpaper readable: calm moonlight defaults
+    accent, accent2, bg = (0.56, 0.71, 0.90), (0.53, 0.77, 0.75), (0.059, 0.067, 0.094)
+
+palette = {"accent": to_hex(accent), "accent2": to_hex(accent2), "bg": to_hex(bg), "source": img}
+state = f"{home}/.local/state/drivewood"
+os.makedirs(state, exist_ok=True)
+tmp = f"{state}/palette.json.tmp"
+with open(tmp, "w") as f:
+    json.dump(palette, f)
+os.replace(tmp, f"{state}/palette.json")
+
+a, b = palette["accent"][1:], palette["accent2"][1:]
+# ~/.config/hypr/hyprland.lua loads this file; a reload picks the new colours up.
+with open(f"{state}/border.lua", "w") as f:
+    f.write("\n".join([
+        "-- written by drivewood-palette: window border follows the wallpaper",
+        "hl.config({ general = { col = {",
+        f'  active_border = {{ colors = {{ "rgba({a}ee)", "rgba({b}ee)" }}, angle = 45 }},',
+        '  inactive_border = "rgba(33364aaa)",',
+        "} } })",
+        "",
+    ]))
+subprocess.run(["hyprctl", "reload"], capture_output=True)
+print(json.dumps(palette))

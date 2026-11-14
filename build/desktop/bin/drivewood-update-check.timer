@@ -1,0 +1,9 @@
+[Unit]
+Description=Check for Drivewood updates now and then
+
+[Timer]
+OnActiveSec=2min
+OnUnitActiveSec=6h
+
+[Install]
+WantedBy=timers.target

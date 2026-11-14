@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Tidepool
+Comment=Artificial life from a few simple rules
+Exec=drivewood-tidepool
+Icon=applications-science
+Categories=Education;Science;

@@ -1,0 +1,23 @@
+#!/bin/bash
+# drivewood-wallpaper: set | next | restore | current
+#   drivewood-wallpaper set ~/Pictures/lake.png
+#   drivewood-wallpaper next        (cycles Drivewood's skies and ~/Pictures/Wallpapers)
+S="$HOME/.local/state/drivewood"; mkdir -p "$S"
+DIRS=(/usr/share/drivewood/backgrounds "$HOME/Pictures/Wallpapers")
+case "${1:-current}" in
+  set) img=$(realpath -e "$2" 2>/dev/null) ;;
+  next)
+    mapfile -t all < <(find "${DIRS[@]}" -maxdepth 1 -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) 2>/dev/null | sort)
+    cur=$(readlink -f "$S/background"); img=${all[0]}
+    for i in "${!all[@]}"; do [ "${all[$i]}" = "$cur" ] && img=${all[$(( (i + 1) % ${#all[@]} ))]}; done ;;
+  restore)
+    img=$(readlink -f "$S/background")
+    [ -f "$img" ] || img=/usr/share/drivewood/backgrounds/2-noon.png ;;
+  current) readlink -f "$S/background"; exit 0 ;;
+  *) echo "usage: drivewood-wallpaper set <image> | next | restore | current"; exit 2 ;;
+esac
+[ -f "$img" ] || { echo "no such image: ${2:-}"; exit 1; }
+ln -sfn "$img" "$S/background"
+pkill -x swaybg 2>/dev/null
+setsid -f swaybg -i "$img" -m fill >/dev/null 2>&1
+echo "$img"

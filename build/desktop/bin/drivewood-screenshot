@@ -1,0 +1,7 @@
+#!/bin/bash
+# drivewood-screenshot area|screen: saves to ~/Pictures/Screenshots and copies to the clipboard
+D="$HOME/Pictures/Screenshots"; mkdir -p "$D"
+F="$D/$(date +%Y-%m-%d_%H-%M-%S).png"
+if [ "${1:-area}" = area ]; then g=$(slurp) || exit 0; grim -g "$g" "$F"; else grim "$F"; fi
+wl-copy < "$F"
+notify-send -a Drivewood "Screenshot saved" "${F/#$HOME/~}"

@@ -1,0 +1,6 @@
+[Unit]
+Description=Drivewood sky: wallpaper follows the time of day
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/drivewood-sky

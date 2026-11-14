@@ -1,0 +1,54 @@
+{
+  // Drivewood menu: own submenu, plus every Omarchy-specific item hidden.
+  // "when": "false" hides a row (its condition always fails). Delete an entry to bring the item back.
+  // Comments must stay on their own lines: the menu parser only strips whole-line comments.
+  "driftwood": {"icon": "", "label": "Drivewood", "description": "Your corner of the OS"},
+  "driftwood.landscape": {"icon": "", "label": "Landscape", "description": "Endless terminal landscape", "action": "xdg-terminal-exec $HOME/driftwood/driftwood.py"},
+  "driftwood.link": {"icon": "󰌷", "label": "DriveWood Link", "description": "Send files and take control of your devices", "action": "drivewood-link"},
+  "driftwood.sky": {"icon": "", "label": "Sky to clock", "description": "Wallpaper follows the time of day", "action": "driftwood-sky --force"},
+  "driftwood.next": {"icon": "", "label": "Next wallpaper", "action": "omarchy-theme-bg-next"},
+  // Omarchy manual
+  "learn.omarchy": {"when": "false"},
+  // Omarchy community
+  "learn.community": {"when": "false"},
+  // preinstalled theme picker
+  "appearance.theme": {"when": "false"},
+  // restores OMARCHY screensaver text
+  "appearance.branding.screensaver.default": {"when": "false"},
+  // restores Omarchy about logo
+  "appearance.branding.about.default": {"when": "false"},
+  "setup.typing": {"when": "false"},
+  "setup.default": {"when": "false"},
+  // Plugins
+  "setup.plugin": {"when": "false"},
+  "setup.security": {"when": "false"},
+  "setup.config": {"when": "false"},
+  "setup.direct-boot": {"when": "false"},
+  "setup.reset": {"when": "false"},
+  // downloads Omarchy themes
+  "install.style.theme": {"when": "false"},
+  // Omarchy preinstalled apps
+  "install.preinstalls": {"when": "false"},
+  // Omarchy preinstalled apps
+  "remove.preinstalls": {"when": "false"},
+  // Omarchy updater (would overwrite Drivewood)
+  "update.omarchy": {"when": "false"},
+  // Omarchy release channels
+  "update.channel": {"when": "false"},
+  // resets configs to Omarchy defaults
+  "update.config": {"when": "false"},
+  // Omarchy extra themes
+  "update.themes": {"when": "false"},
+  // stock bar settings (Show Bar would bring the old bar back)
+  "appearance.top-bar": {"when": "false"},
+  // stock dock
+  "appearance.dock": {"when": "false"},
+  // preinstalled unlock logos
+  "appearance.unlock": {"when": "false"},
+  // removes themes (could delete Drivewood)
+  "remove.theme": {"when": "false"},
+  // restarts the stock shell
+  "update.process.shell": {"when": "false"},
+  // About shows Drivewood instead of the Omarchy about window
+  "about": {"icon": "", "label": "About", "action": "xdg-terminal-exec --app-id=org.omarchy.terminal bash -c 'sleep 0.4; clear; fastfetch; read -rsn1'"}
+}

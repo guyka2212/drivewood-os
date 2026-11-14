@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Landscape
+Comment=An endless landscape drifting through your terminal
+Exec=drivewood-landscape
+Icon=weather-clear-night
+Categories=Graphics;

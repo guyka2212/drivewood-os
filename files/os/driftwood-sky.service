@@ -1,0 +1,9 @@
+[Unit]
+Description=Match the Driftwood wallpaper to the time of day
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/share/omarchy/bin:/usr/local/bin:/usr/bin:/bin:%h/.local/bin
+ExecStart=%h/.local/bin/driftwood-sky
