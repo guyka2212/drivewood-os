@@ -17,10 +17,10 @@ mkdir -p \$P/airootfs/root/drivewood \$P/airootfs/usr/local/bin
 tar xzf $W/files/project.tar.gz -C \$P/airootfs/root/drivewood
 install -m 755 \$P/airootfs/root/drivewood/build/drivewood-install \$P/airootfs/usr/local/bin/drivewood-install
 printf '\n\033[38;2;143;180;230m  Drivewood installer\033[0m  type  \033[1mdrivewood-install\033[0m  to begin.\n\n' > \$P/airootfs/etc/motd
-grep -q drivewood-install \$P/profiledef.sh || sed -i 's|^file_permissions=(|file_permissions=(\n  [\"/usr/local/bin/drivewood-install\"]=\"0:0:755\"|' \$P/profiledef.sh
+echo 'file_permissions+=([\"/usr/local/bin/drivewood-install\"]=\"0:0:755\")' >> \$P/profiledef.sh
 mkarchiso -v -w $W/work -o $W/out \$P 2>&1 | tail -5
 rm -rf $W/work
 "
-ISO=$(ls $W/out/*.iso | head -1); ls -la "$ISO"; sha256sum "$ISO" | sudo tee "$ISO.sha256"
+ISO=$(ls $W/out/*.iso | head -1); ls -la "$ISO"; sha256sum "$ISO" | tee "$HOME/drivewood-installer.iso.sha256"
 echo "== uploading to the project folder"
-curl -fsS -T "$ISO" http://10.0.2.2:8001/drivewood-installer.iso && curl -fsS -T "$ISO.sha256" http://10.0.2.2:8001/drivewood-installer.iso.sha256 && echo "uploaded"
+curl -fsS -T "$ISO" http://10.0.2.2:8001/drivewood-installer.iso && curl -fsS -T "$HOME/drivewood-installer.iso.sha256" http://10.0.2.2:8001/drivewood-installer.iso.sha256 && echo "uploaded"
