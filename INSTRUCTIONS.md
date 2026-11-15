@@ -210,7 +210,7 @@ all-settings setup      # one section: setup, appearance, install, remove, updat
 
 ### 5.9 Apps
 - **Landscape** (`apps/driftwood/driftwood.py`): `python driftwood.py`. Works on Linux (termios) and Windows (msvcrt).
-- **Tidepool** (`apps/tidepool/index.html`): open in a browser. In the OS it runs as `chromium --app=file://$HOME/tidepool/index.html`.
+- **Tidepool** (`apps/tidepool/index.html`): open in a browser. In the OS it runs as `drivewood-tidepool`, which opens `/usr/share/drivewood/apps/tidepool/index.html` in a Zen window.
 - **Android Studio**: `studio.sh` (official Google archive, checksum verified, `~/.local/opt/android-studio`).
 
 ---
@@ -460,16 +460,17 @@ Same result as the first VM, but built cleanly:
 
 ### Updates and releases (GitHub)
 - **Public repo:** https://github.com/guyka2212/drivewood-os (GPL-3.0). The whole project folder is the repo; build output (`build/stage*`, `dist/`, ISOs, APKs) is left out by `.gitignore` and published as release files instead. `.gitattributes` keeps Linux line endings so the scripts run on Drivewood.
-- **Version:** `build/VERSION` (now `1.0.0`). `make_stage.sh` copies it to `/usr/share/drivewood/version` on installed systems.
+- **Version:** `build/VERSION` (now `1.1.2`). `make_stage.sh` copies it to `/usr/share/drivewood/version` on installed systems.
 - **Checking:** `drivewood-update-check` (user timer `drivewood-update-check.timer`: 2 minutes after login, then every 6 hours) asks the GitHub API for the latest release. If its tag (for example `v1.0.1`) is newer and it has a `drivewood-update-<version>.tar.gz`, it writes `~/.local/state/drivewood/update.json`. The bar then shows a small bouncing **down arrow** next to the CPU/memory bars.
 - **Updating:** clicking the arrow runs `drivewood-update` in a terminal. It:
   1. shows the release notes and asks to confirm
   2. downloads the update and checks its SHA-256
   3. asks for the user's password once
   4. updates Arch packages (`pacman -Syu` plus anything new in `packages.txt`)
-  5. installs Drivewood's system files, rebuilds the DriveWood Link package, refreshes the boot animation
-  6. copies only Drivewood's own desktop files (`hyprland.lua`, `hyprlock.conf`, `foot.ini`, mako, fastfetch, starship)
-  7. reloads the desktop
+  5. installs Drivewood's system files and refreshes the boot animation
+  6. hands over to the **new** `drivewood-update --finish` it just installed, which rebuilds DriveWood Link, installs or updates **Zen Browser** when the pinned version changed, makes Zen the default browser (only if the default was empty or Chromium), copies only Drivewood's own desktop files (`hyprland.lua`, `hyprlock.conf`, `foot.ini`, mako, fastfetch, starship) and reloads the desktop. It writes `~/.local/state/drivewood/finished`.
+  7. Updates started from 1.0.0 run the old updater, which doesn't hand over. It ends by running the new `drivewood-update-check` in its terminal, which sees `finished` is not the new version and runs `drivewood-update --finish` there.
+- **Zen Browser** replaces Chromium (1.1.2). Zen isn't in Arch's repos, so `build/zen/` is a small Drivewood package (`drivewood-zen`) that downloads the official `zen.linux-x86_64.tar.xz` from github.com/zen-browser/desktop, pinned to one version and checked against its SHA-256. To move to a newer Zen, change `pkgver` and `sha256sums` in `build/zen/PKGBUILD` (the SHA-256 is on the Zen release page, or `gh api repos/zen-browser/desktop/releases/latest`) and make a Drivewood release. Zen's own updater is turned off (`policies.json`). Updated systems keep Chromium installed (with its bookmarks) until the user removes it in Settings → Apps; new installs only have Zen.
 - **Nothing of the user's is removed or changed:** Documents, Pictures, Downloads, apps, `custom.lua`, Settings choices (`drivewood-settings.lua`, `settings.json`), `hypridle.conf` and the Link sign-in all stay.
 - **Making a release:**
   1. Raise `build/VERSION`.
@@ -483,4 +484,5 @@ Same result as the first VM, but built cleanly:
 
 ### Stage 6: `drivewood-installer.iso`
 - Built with archiso from the stage 5 package list (`build/packages.txt`) and configs. The installer asks for a username (no fixed name any more).
+- Boot screen branding: `build/iso/splash.png` (640×480, the Drivewood logo on dark navy) replaces Arch's boot-menu splash, and every "Arch Linux" in the boot menus (BIOS and UEFI) is renamed to "Drivewood" by `make-iso.sh`.
 - Goes into the **project folder**, `C:\Users\User\Documents\Drivewood\drivewood-installer.iso`, after the final "done". It's kept out of git and attached to a GitHub release once the owner has written the release notes.

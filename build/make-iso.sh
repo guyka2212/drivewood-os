@@ -2,6 +2,7 @@
 # Build drivewood-installer.iso on a Drivewood/Arch machine (asks for the password once), then upload it.
 set -e
 SRC=http://10.0.2.2:8000; W=/var/tmp/dwiso
+V=$(curl -fsS $SRC/build/VERSION | tr -d '[:space:]')
 sudo bash -e -c "
 pacman -S --needed --noconfirm archiso >/dev/null
 rm -rf $W; mkdir -p $W/files
@@ -9,10 +10,14 @@ cp -r /usr/share/archiso/configs/releng $W/profile
 "
 cd $W
 sudo curl -fsS -o files/project.tar.gz $SRC/build/iso-payload.tar.gz
+sudo curl -fsS -o files/splash.png $SRC/build/iso/splash.png
 sudo bash -e -c "
 P=$W/profile
-sed -i 's/^iso_name=.*/iso_name=\"drivewood-installer\"/; s/^iso_label=.*/iso_label=\"DRIVEWOOD\"/; s/^iso_publisher=.*/iso_publisher=\"Drivewood <https:\/\/github.com\/guyka2212\/drivewood-os>\"/; s/^iso_application=.*/iso_application=\"Drivewood installer\"/; s/^iso_version=.*/iso_version=\"1.0.0\"/' \$P/profiledef.sh
+sed -i 's/^iso_name=.*/iso_name=\"drivewood-installer\"/; s/^iso_label=.*/iso_label=\"DRIVEWOOD\"/; s/^iso_publisher=.*/iso_publisher=\"Drivewood <https:\/\/github.com\/guyka2212\/drivewood-os>\"/; s/^iso_application=.*/iso_application=\"Drivewood installer\"/; s/^iso_version=.*/iso_version=\"$V\"/' \$P/profiledef.sh
 grep -rl 'Arch Linux install medium' \$P | xargs -r sed -i 's/Arch Linux install medium/Drivewood installer/g'
+# boot menus: Drivewood splash and names instead of Arch's
+cp $W/files/splash.png \$P/syslinux/splash.png
+grep -rl 'Arch Linux' \$P/syslinux \$P/grub \$P/efiboot 2>/dev/null | xargs -r sed -i 's/Arch Linux/Drivewood/g'
 mkdir -p \$P/airootfs/root/drivewood \$P/airootfs/usr/local/bin
 tar xzf $W/files/project.tar.gz -C \$P/airootfs/root/drivewood
 install -m 755 \$P/airootfs/root/drivewood/build/drivewood-install \$P/airootfs/usr/local/bin/drivewood-install

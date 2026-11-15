@@ -29,7 +29,12 @@ wireplumber
 brightnessctl
 playerctl
 foot
-chromium
+gtk3
+libxt
+mime-types
+dbus-glib
+nss
+ffmpeg
 nautilus
 fastfetch
 starship

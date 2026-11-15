@@ -22,6 +22,8 @@ mkdir -p $S/usr/share/drivewood/settings $S/usr/share/applications
 cp desktop/settings/drivewood_settings.py $S/usr/share/drivewood/settings/
 cp desktop/applications/*.desktop $S/usr/share/applications/
 cp VERSION $S/usr/share/drivewood/version
+mkdir -p $S/usr/share/drivewood/zen; cp zen/PKGBUILD zen/zen-browser zen/zen.desktop zen/policies.json $S/usr/share/drivewood/zen/
+cp desktop/mimeapps.list $S/etc/skel/.config/mimeapps.list
 tar czf stage.tar.gz -C $S .
 echo "stage: $(find $S -type f | wc -l) files, $(du -sh stage.tar.gz | cut -f1)"
 grep -rIl -i "omarchy\|driftwood" $S --include='*.qml' --include='*.lua' --include='*.conf' --include='*.jsonc' --include='*.script' --include='*.plymouth' --include='drivewood-*' 2>/dev/null | sed 's/^/leftover name in: /' || true

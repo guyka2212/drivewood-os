@@ -1,0 +1,29 @@
+# Zen Browser for Drivewood: the official Linux release from github.com/zen-browser/desktop,
+# pinned to one version and checked against its SHA-256. A Drivewood release raises the version.
+pkgname=drivewood-zen
+pkgver=1.24.2b
+pkgrel=1
+pkgdesc="Zen Browser (official build), packaged for Drivewood"
+arch=('x86_64')
+url="https://github.com/zen-browser/desktop"
+license=('MPL-2.0')
+depends=('gtk3' 'libxt' 'mime-types' 'dbus-glib' 'nss' 'ffmpeg')
+provides=('zen-browser')
+conflicts=('zen-browser' 'zen-browser-bin')
+options=('!strip' '!debug')
+source=("zen-$pkgver-x86_64.tar.xz::https://github.com/zen-browser/desktop/releases/download/$pkgver/zen.linux-x86_64.tar.xz")
+sha256sums=('bcf7e43160ecfe5f29953ed2a984e7a8028a58f2ec0e3114d36bb904d5f5ce80')
+
+package() {
+  install -d "$pkgdir/opt"
+  cp -r zen "$pkgdir/opt/zen-browser"
+  install -Dm755 "$startdir/zen-browser" "$pkgdir/usr/bin/zen-browser"
+  install -Dm644 "$startdir/zen.desktop" "$pkgdir/usr/share/applications/zen.desktop"
+  for i in 16 32 48 64 128; do
+    install -d "$pkgdir/usr/share/icons/hicolor/${i}x${i}/apps"
+    ln -s "/opt/zen-browser/browser/chrome/icons/default/default$i.png" "$pkgdir/usr/share/icons/hicolor/${i}x${i}/apps/zen-browser.png"
+  done
+  # updates come with Drivewood releases (the folder is read-only for the browser's own updater)
+  install -Dm644 "$startdir/policies.json" "$pkgdir/opt/zen-browser/distribution/policies.json"
+  ln -sf /usr/lib/libnssckbi.so "$pkgdir/opt/zen-browser/libnssckbi.so"
+}

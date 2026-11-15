@@ -32,7 +32,7 @@ PER_FILE = {
          'run("gtk-launch " + quote(entry.id + ".desktop"))'),
     ],
     "Tide.qml": [
-        ('cmd: "omarchy-launch-browser"', 'cmd: "chromium"'),
+        ('cmd: "omarchy-launch-browser"', 'cmd: "zen-browser"'),
         ('cmd: "uwsm-app -- nautilus --new-window"', 'cmd: "nautilus --new-window"'),
         ('cmd: "xdg-terminal-exec " + home + "/driftwood/driftwood.py"', 'cmd: "drivewood-landscape"'),
         ('cmd: "uwsm-app -- gtk-launch android-studio.desktop"', 'cmd: "gtk-launch android-studio.desktop"'),

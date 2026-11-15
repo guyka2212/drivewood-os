@@ -24,7 +24,7 @@ PanelWindow {
   readonly property string home: Theme.home
   readonly property var favs: [
     { icon: "", label: "Terminal", tint: Theme.pine, cmd: "xdg-terminal-exec" },
-    { icon: "", label: "Browser", tint: Theme.accent, cmd: "chromium" },
+    { icon: "", label: "Browser", tint: Theme.accent, cmd: "zen-browser" },
     { icon: "", label: "Files", tint: Theme.accent, cmd: "nautilus --new-window" },
     { icon: "", label: "Landscape", tint: Theme.accent2, cmd: "drivewood-landscape" },
     { icon: "󰌷", label: "Link", tint: Theme.accent2, cmd: "drivewood-link" },

@@ -39,10 +39,11 @@ PKGS=(
   limine plymouth greetd
   hyprland quickshell hyprlock hypridle swaybg xdg-desktop-portal-hyprland xdg-desktop-portal-gtk polkit
   pipewire pipewire-pulse pipewire-alsa wireplumber brightnessctl playerctl
-  foot chromium nautilus fastfetch starship imagemagick mako
+  foot nautilus fastfetch starship imagemagick mako
   python python-gobject python-cairo gtk4 openssl grim slurp wl-clipboard libnotify
   ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji papirus-icon-theme
   qt6-wayland qt6-svg qt6-declarative
+  gtk3 libxt mime-types dbus-glib nss ffmpeg
 )
 pacman -Sy --noconfirm archlinux-keyring
 pacstrap -K /mnt "${PKGS[@]}"

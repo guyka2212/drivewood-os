@@ -4,6 +4,11 @@
 REPO=guyka2212/drivewood-os
 S="$HOME/.local/state/drivewood"; mkdir -p "$S"
 CUR=$(cat /usr/share/drivewood/version 2>/dev/null || echo 0)
+# An update started from an older drivewood-update (1.0.0) ends by running this checker in its
+# terminal: finish it with this version's own last steps (for example installing Zen Browser).
+if [ -t 0 ] && [ -e /dev/tty ] && [ "$(cat "$S/finished" 2>/dev/null)" != "$CUR" ]; then
+  drivewood-update --finish </dev/tty >/dev/tty 2>&1 || true
+fi
 curl -fsS --max-time 20 -H "Accept: application/vnd.github+json" \
   "https://api.github.com/repos/$REPO/releases/latest" -o "$S/latest.json" || exit 0
 CUR="$CUR" OUT="$S/update.json" python3 - "$S/latest.json" <<'PY'

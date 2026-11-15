@@ -75,7 +75,7 @@ for _, key in ipairs({ "Super_L", "Super_R" }) do
 end
 hl.bind(M .. " + ALT + SPACE", hl.dsp.exec_cmd(shell .. "apps"), { description = "All apps" })
 hl.bind(M .. " + RETURN", hl.dsp.exec_cmd("foot"), { description = "Terminal" })
-hl.bind(M .. " + B", hl.dsp.exec_cmd("chromium"), { description = "Browser" })
+hl.bind(M .. " + B", hl.dsp.exec_cmd("zen-browser"), { description = "Browser" })
 hl.bind(M .. " + E", hl.dsp.exec_cmd("nautilus --new-window"), { description = "Files" })
 hl.bind(M .. " + ALT + L", hl.dsp.exec_cmd("drivewood-link"), { description = "DriveWood Link" })
 hl.bind(M .. " + ALT + D", hl.dsp.exec_cmd("drivewood-landscape"), { description = "Landscape" })

@@ -3,11 +3,59 @@
 # Only Drivewood's own files are replaced. Your files, settings, apps and accounts stay as they are:
 # nothing in your home folder is deleted, and your own changes (custom.lua, Settings choices,
 # hypridle timers, Link sign-in, Documents, Pictures...) are never touched.
+#
+# Two parts: this script downloads the update and installs the system files, then hands over to
+# the NEW drivewood-update it just installed ("--finish"), so a release can add its own last steps
+# (new apps, new defaults) and they run even when the update was started from an older version.
 if [ ! -t 0 ]; then exec foot --title "Drivewood update" "$0" "$@"; fi
 set -e
-S="$HOME/.local/state/drivewood"; W="$HOME/.cache/drivewood-update"
-finish() { echo; read -rp "Press Enter to close. " _; }
-trap finish EXIT
+S="$HOME/.local/state/drivewood"; mkdir -p "$S"
+CUR=$(cat /usr/share/drivewood/version 2>/dev/null || echo 0)
+
+finish_steps() {  # $1 = unpacked update folder (empty when run after an older updater)
+  local W="$1"
+  if [ -n "$W" ] && [ -f "$W/link.tar.gz" ]; then
+    echo "== DriveWood Link"
+    rm -rf "$W/link"; mkdir -p "$W/link" && tar xzf "$W/link.tar.gz" -C "$W/link"
+    ( cd "$W/link/packaging" && makepkg -f --nodeps >/dev/null 2>&1 ) && sudo pacman -U --noconfirm "$W"/link/packaging/drivewood-link-*.pkg.tar.zst >/dev/null
+  fi
+  local want have
+  want=$(sed -n 's/^pkgver=//p' /usr/share/drivewood/zen/PKGBUILD 2>/dev/null)
+  have=$(pacman -Q drivewood-zen 2>/dev/null | awk '{print $2}' | sed 's/-[0-9]*$//')
+  if [ -n "$want" ] && [ "$want" != "$have" ]; then
+    echo "== Zen Browser $want (downloading the official build)"
+    local Z="$HOME/.cache/drivewood-zen"; rm -rf "$Z"; cp -r /usr/share/drivewood/zen "$Z"
+    ( cd "$Z" && makepkg -f --nodeps >/dev/null 2>&1 ) || { echo "Zen Browser could not be built; try the update again later."; return 1; }
+    sudo pacman -U --noconfirm "$Z"/drivewood-zen-*.pkg.tar.zst >/dev/null
+    rm -rf "$Z"
+  fi
+  # Zen becomes the browser for links, unless you already picked a different one yourself
+  local cur
+  cur=$(gio mime x-scheme-handler/https 2>/dev/null | sed -n 's/^Default application[^:]*: //p')
+  if [ -z "$cur" ] || [ "$cur" = chromium.desktop ]; then
+    for m in text/html application/xhtml+xml x-scheme-handler/http x-scheme-handler/https; do gio mime "$m" zen.desktop >/dev/null 2>&1 || true; done
+  fi
+  echo "== your desktop files (only Drivewood's own; your changes stay)"
+  for f in hypr/hyprland.lua hypr/hyprlock.conf foot/foot.ini mako/config fastfetch/config.jsonc starship.toml; do
+    install -D -m 644 "/etc/skel/.config/$f" "$HOME/.config/$f"
+  done
+  hyprctl reload >/dev/null 2>&1 || true
+  pkill -f "qs -n -p /usr/share/drivewood/shell" || true; sleep 0.5
+  setsid -f qs -n -p /usr/share/drivewood/shell >/dev/null 2>&1
+  echo "$CUR" > "$S/finished"
+}
+
+if [ "$1" = "--finish" ]; then
+  [ -n "$2" ] && trap 'echo; read -rp "Press Enter to close. " _' EXIT
+  finish_steps "$2"
+  drivewood-update-check >/dev/null 2>&1 || true
+  notify-send -a Drivewood "Drivewood updated" "Now on $CUR" || true
+  [ -n "$2" ] && echo "== Drivewood $CUR installed. Restart if the kernel was updated."
+  exit 0
+fi
+
+W="$HOME/.cache/drivewood-update"
+trap 'echo; read -rp "Press Enter to close. " _' EXIT
 drivewood-update-check >/dev/null || true
 eval "$(python3 -c 'import json,shlex;u=json.load(open("'"$S"'/update.json"));[print(k.upper()+"="+shlex.quote(str(u.get(k) or ""))) for k in ("available","version","url","sha256_url","current")]')"
 if [ "$AVAILABLE" != "True" ]; then echo "Drivewood $CURRENT is up to date."; exit 0; fi
@@ -30,16 +78,5 @@ sudo bash -e -c "
   plymouth-set-default-theme drivewood
   mkinitcpio -P >/dev/null
 "
-echo "== DriveWood Link"
-mkdir -p "$W/link" && tar xzf "$W/link.tar.gz" -C "$W/link"
-( cd "$W/link/packaging" && makepkg -f --nodeps >/dev/null 2>&1 ) && sudo pacman -U --noconfirm "$W"/link/packaging/drivewood-link-*.pkg.tar.zst >/dev/null
-echo "== your desktop files (only Drivewood's own; your changes stay)"
-for f in hypr/hyprland.lua hypr/hyprlock.conf foot/foot.ini mako/config fastfetch/config.jsonc starship.toml; do
-  install -D -m 644 "/etc/skel/.config/$f" "$HOME/.config/$f"
-done
-hyprctl reload >/dev/null 2>&1 || true
-pkill -f "qs -n -p /usr/share/drivewood/shell" || true; sleep 0.5
-setsid -f qs -n -p /usr/share/drivewood/shell >/dev/null 2>&1
-drivewood-update-check >/dev/null || true
-notify-send -a Drivewood "Drivewood updated" "Now on $VERSION" || true
-echo "== Drivewood $VERSION installed. Restart if the kernel was updated."
+trap - EXIT
+exec /usr/bin/drivewood-update --finish "$W"

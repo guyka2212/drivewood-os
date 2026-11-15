@@ -28,6 +28,13 @@ arch-chroot $T /bin/bash -e <<CHROOT
 chown -R $USERNAME:$USERNAME /home/$USERNAME /var/tmp/dwlink
 cd /var/tmp/dwlink/packaging && sudo -u $USERNAME makepkg -f --nodeps 2>&1 | tail -3
 pacman -U --noconfirm /var/tmp/dwlink/packaging/drivewood-link-*.pkg.tar.zst 2>&1 | tail -3
+echo "== Zen Browser (official build)"
+rm -rf /var/tmp/dwzen; cp -r /usr/share/drivewood/zen /var/tmp/dwzen; chown -R $USERNAME:$USERNAME /var/tmp/dwzen
+cd /var/tmp/dwzen && sudo -u $USERNAME makepkg -f --nodeps 2>&1 | tail -3
+pacman -U --noconfirm /var/tmp/dwzen/drivewood-zen-*.pkg.tar.zst 2>&1 | tail -3
+cd / && rm -rf /var/tmp/dwzen
+cat /usr/share/drivewood/version > /home/$USERNAME/.local/state/drivewood/finished
+chown $USERNAME:$USERNAME /home/$USERNAME/.local/state/drivewood/finished
 systemctl --global enable drivewood-sky.timer drivewood-update-check.timer
 echo "== boot animation"
 plymouth-set-default-theme drivewood
