@@ -15,3 +15,5 @@ link/android/.idea/
 __pycache__/
 *.pyc
 build/iso-payload.tar.gz
+# the website has its own repo (guyka2212/drivewood-website)
+Website/
