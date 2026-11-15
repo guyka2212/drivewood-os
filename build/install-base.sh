@@ -26,7 +26,7 @@ label: dos
 ,,83
 EOF
 sleep 1
-P1=${DISK}1; P2=${DISK}2
+P1=${DISK}${PART:-}1; P2=${DISK}${PART:-}2
 mkfs.fat -F 32 -n DWBOOT "$P1"
 mkfs.ext4 -F -L drivewood "$P2"
 mount "$P2" /mnt

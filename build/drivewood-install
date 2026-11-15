@@ -1,0 +1,14 @@
+#!/bin/bash
+# Drivewood installer (on the Drivewood ISO): pick a disk, then install Drivewood on it.
+clear; cat /root/drivewood/banner.txt 2>/dev/null
+echo; echo "  Welcome to the Drivewood installer."
+echo "  You need an internet connection (wired works automatically; Wi-Fi: run 'iwctl')."
+echo; lsblk -dpno NAME,SIZE,MODEL | grep -v -E "loop|sr[0-9]|fd[0-9]"
+echo; read -rp "  Install Drivewood on which disk (e.g. /dev/sda or /dev/nvme0n1)? " DISK
+[ -b "$DISK" ] || { echo "  No such disk."; exit 1; }
+read -rp "  EVERYTHING on $DISK will be erased. Type yes to continue: " ok
+[ "$ok" = yes ] || { echo "  Cancelled."; exit 1; }
+case $DISK in *nvme*|*mmcblk*) export PART=p ;; esac
+export DISK SRC=file:///root/drivewood
+bash /root/drivewood/build/install-base.sh && bash /root/drivewood/build/install-desktop.sh && {
+  echo; echo "  Drivewood is installed. Remove the USB stick / ISO and press Enter to restart."; read -r _; reboot; }

@@ -2,7 +2,7 @@
 # Drivewood desktop stage. Run from the live ISO after install-base.sh (target mounted on /mnt):
 #   curl -s 10.0.2.2:8000/build/install-desktop.sh | bash
 set -euo pipefail
-T=/mnt; USERNAME=${USERNAME:-$(ls /mnt/home | head -1)}; SRC=http://10.0.2.2:8000
+T=/mnt; USERNAME=${USERNAME:-$(ls /mnt/home | head -1)}; SRC=${SRC:-http://10.0.2.2:8000}
 LOG=/tmp/drivewood-desktop.log; exec > >(tee "$LOG") 2>&1
 trap 'curl -s --data-binary @"$LOG" $SRC/install-desktop-log >/dev/null || true' EXIT
 mountpoint -q $T || { echo "/mnt is not mounted (run install-base.sh first)"; exit 1; }

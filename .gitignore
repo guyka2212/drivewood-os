@@ -14,3 +14,4 @@ link/android/.idea/
 # Python caches
 __pycache__/
 *.pyc
+build/iso-payload.tar.gz
