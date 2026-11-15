@@ -8,6 +8,10 @@
 # the NEW drivewood-update it just installed ("--finish"), so a release can add its own last steps
 # (new apps, new defaults) and they run even when the update was started from an older version.
 if [ ! -t 0 ]; then exec foot --title "Drivewood update" "$0" "$@"; fi
+# Keep the screen awake while updating, so it doesn't lock while the update waits for your password.
+if [ -z "$DW_AWAKE" ] && command -v systemd-inhibit >/dev/null; then
+  DW_AWAKE=1 exec systemd-inhibit --what=idle --who=Drivewood --why="Updating Drivewood" "$0" "$@"
+fi
 set -e
 S="$HOME/.local/state/drivewood"; mkdir -p "$S"
 CUR=$(cat /usr/share/drivewood/version 2>/dev/null || echo 0)
@@ -70,6 +74,7 @@ curl -fsSL -o update.tar.gz.sha256 "$SHA256_URL"
 echo "$(cut -d' ' -f1 update.tar.gz.sha256)  update.tar.gz" | sha256sum -c - || { echo "Checksum mismatch, nothing was installed."; exit 1; }
 tar xzf update.tar.gz
 echo "== installing (asks for your password)"
+until sudo -v; do read -rp "The password wasn't entered. Press Enter to try again. " _; done
 sudo bash -e -c "
   pacman -Syu --needed --noconfirm \$(cat '$W/packages.txt')
   tar xzf '$W/stage.tar.gz' --no-same-owner -C / --exclude=./etc/skel/.config/hypr/hypridle.conf

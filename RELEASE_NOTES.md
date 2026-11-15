@@ -1,25 +1,16 @@
-# Drivewood 1.1.2
+# Drivewood 1.1.3
 
-A new browser, a Drivewood boot screen for the installer, and a smarter updater.
-
-## New
-- **Zen Browser replaces Chromium.** Super + B, the Browser button in the Super menu and Tidepool now open Zen, and it's the default browser for links. It's Zen's official build (1.24.2b), checked against its SHA-256 before it's installed. New Zen versions come with Drivewood updates.
-- **Drivewood boot screen on the installer.** The installer USB's boot menu now shows the Drivewood logo and name instead of Arch Linux's.
-
-## Changed
-- **Updating from 1.0.0:** the update installs Zen and makes it your default browser, unless you'd already picked a different one. Chromium is **not** removed, so your bookmarks and logins stay; you can uninstall it yourself in Settings → Apps. New installs come with Zen only.
-- **Smarter updater:** after installing the new system files, the updater hands over to the newly installed version for the last steps. That way a release can bring its own install steps (like installing Zen), even when you update from an older version.
-- The installer ISO's version number now matches the Drivewood version.
+A small fix for the updater: updates no longer stop if you step away.
 
 ## Fixed
-- Typing `drivewood-install` on the installer USB no longer fails with "permission denied".
+- **The screen stays awake while Drivewood updates.** Before, if an update waited for your password for more than 5 minutes, the screen locked, the password prompt timed out and nothing was installed. Now the screen doesn't lock or turn off while the update window is open, and it goes back to your normal lock timers as soon as the update is done.
+- **A timed-out password prompt can be tried again.** If you still miss the password prompt, the updater asks whether to try again instead of stopping.
 
 ## Good to know
-- Updating to 1.1.2 downloads Zen (about 115 MB), so it takes a few minutes longer than usual and needs an internet connection.
-- As before, your files, apps, Settings choices, your own shortcuts and your Link sign-in all stay.
-- The installer still needs an internet connection and BIOS/legacy boot.
+- The fix takes effect for the update **after** this one: updating to 1.1.3 still runs your current updater for its first part.
+- As always, your files, apps, Settings choices, your own shortcuts and your Link sign-in all stay.
+- No new installer this time: the 1.1.2 installer ISO installs Drivewood, and the built-in updater brings it to 1.1.3.
 
 ## Files in this release
-- `drivewood-installer.iso` (+ `.sha256`): the installer.
-- `drivewood-update-1.1.2.tar.gz` (+ `.sha256`): used by the built-in updater.
+- `drivewood-update-1.1.3.tar.gz` (+ `.sha256`): used by the built-in updater.
 - `drivewood-link.apk`: DriveWood Link for Android.

@@ -460,12 +460,12 @@ Same result as the first VM, but built cleanly:
 
 ### Updates and releases (GitHub)
 - **Public repo:** https://github.com/guyka2212/drivewood-os (GPL-3.0). The whole project folder is the repo; build output (`build/stage*`, `dist/`, ISOs, APKs) is left out by `.gitignore` and published as release files instead. `.gitattributes` keeps Linux line endings so the scripts run on Drivewood.
-- **Version:** `build/VERSION` (now `1.1.2`). `make_stage.sh` copies it to `/usr/share/drivewood/version` on installed systems.
+- **Version:** `build/VERSION` (now `1.1.3`). `make_stage.sh` copies it to `/usr/share/drivewood/version` on installed systems.
 - **Checking:** `drivewood-update-check` (user timer `drivewood-update-check.timer`: 2 minutes after login, then every 6 hours) asks the GitHub API for the latest release. If its tag (for example `v1.0.1`) is newer and it has a `drivewood-update-<version>.tar.gz`, it writes `~/.local/state/drivewood/update.json`. The bar then shows a small bouncing **down arrow** next to the CPU/memory bars.
 - **Updating:** clicking the arrow runs `drivewood-update` in a terminal. It:
   1. shows the release notes and asks to confirm
   2. downloads the update and checks its SHA-256
-  3. asks for the user's password once
+  3. keeps the screen awake for the whole update (`systemd-inhibit --what=idle`, which hypridle respects) and asks for the user's password once; if the password prompt times out it offers to ask again (1.1.3)
   4. updates Arch packages (`pacman -Syu` plus anything new in `packages.txt`)
   5. installs Drivewood's system files and refreshes the boot animation
   6. hands over to the **new** `drivewood-update --finish` it just installed, which rebuilds DriveWood Link, installs or updates **Zen Browser** when the pinned version changed, makes Zen the default browser (only if the default was empty or Chromium), copies only Drivewood's own desktop files (`hyprland.lua`, `hyprlock.conf`, `foot.ini`, mako, fastfetch, starship) and reloads the desktop. It writes `~/.local/state/drivewood/finished`.
