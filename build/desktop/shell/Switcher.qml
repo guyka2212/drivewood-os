@@ -113,8 +113,8 @@ PanelWindow {
     Keys.onReleased: function(e) { if (e.key === Qt.Key_Alt || e.key === Qt.Key_Meta) sw.done() }
     Keys.onPressed: function(e) {
       if (e.key === Qt.Key_Escape) { sw.sel = 0; sw.done(); e.accepted = true }  // back to where you were
+      else if (e.key === Qt.Key_Backtab || e.key === Qt.Key_Left || (e.key === Qt.Key_Tab && (e.modifiers & Qt.ShiftModifier))) { sw.step(-1); e.accepted = true }
       else if (e.key === Qt.Key_Tab || e.key === Qt.Key_Right) { sw.step(1); e.accepted = true }
-      else if (e.key === Qt.Key_Backtab || e.key === Qt.Key_Left) { sw.step(-1); e.accepted = true }
       else if (e.key === Qt.Key_Return || e.key === Qt.Key_Enter) { sw.done(); e.accepted = true }
     }
   }

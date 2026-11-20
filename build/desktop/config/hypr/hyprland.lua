@@ -54,6 +54,8 @@ hl.config({
 pcall(dofile, home .. "/.local/state/drivewood/border.lua")
 -- choices made in Drivewood Settings (keyboard, mouse, screens, gaps, corners...)
 pcall(dofile, home .. "/.config/hypr/drivewood-settings.lua")
+-- mouse turned off with Super + M (cleared at the next login)
+pcall(dofile, (os.getenv("XDG_RUNTIME_DIR") or "/tmp") .. "/drivewood-mouse-off.lua")
 
 -- motion: windows float in gently, workspaces glide
 hl.curve("drift", { type = "bezier", points = { { 0.22, 1 }, { 0.36, 1 } } })
@@ -78,9 +80,16 @@ hl.bind(M .. " + RETURN", hl.dsp.exec_cmd("foot"), { description = "Terminal" })
 -- Alt + Tab: switch between open apps (hold Alt and press Tab again to go further back)
 hl.bind("ALT + TAB", hl.dsp.exec_cmd(shell .. "switchNext"), { description = "Switch app" })
 hl.bind("ALT + SHIFT + TAB", hl.dsp.exec_cmd(shell .. "switchPrev"), { description = "Switch app (back)" })
+-- letting go of Alt picks the highlighted app (also when Shift is still held)
 for _, key in ipairs({ "Alt_L", "Alt_R" }) do
   hl.bind("ALT + " .. key, hl.dsp.exec_cmd(shell .. "switchDone"), { release = true })
+  hl.bind("ALT + SHIFT + " .. key, hl.dsp.exec_cmd(shell .. "switchDone"), { release = true })
 end
+-- Super + Tab: next workspace that has windows; add Shift to go back
+hl.bind(M .. " + TAB", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
+hl.bind(M .. " + SHIFT + TAB", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
+-- Super + M: turn the mouse off / on (hides it and ignores it)
+hl.bind(M .. " + M", hl.dsp.exec_cmd("drivewood-mouse"), { description = "Mouse off / on" })
 hl.bind(M .. " + B", hl.dsp.exec_cmd("zen-browser"), { description = "Browser" })
 hl.bind(M .. " + E", hl.dsp.exec_cmd("nautilus --new-window"), { description = "Files" })
 hl.bind(M .. " + ALT + L", hl.dsp.exec_cmd("drivewood-link"), { description = "DriveWood Link" })

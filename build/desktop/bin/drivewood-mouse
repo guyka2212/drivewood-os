@@ -1,0 +1,29 @@
+#!/bin/bash
+# Super + M: turn the mouse off (cursor hidden, moves and clicks ignored) and back on.
+# The "off" state lives in $XDG_RUNTIME_DIR, so it survives a config reload but not a new login.
+F="${XDG_RUNTIME_DIR:-/tmp}/drivewood-mouse-off.lua"
+if [ -f "$F" ]; then ON=true; else ON=false; fi
+
+LUA=$(hyprctl devices -j | ON="$ON" python3 -c '
+import json, os, sys
+d = json.load(sys.stdin)
+on = os.environ["ON"]
+names = [m["name"] for m in d.get("mice", [])] + [t["name"] for t in d.get("tablets", []) if t.get("name")]
+for n in names:
+    print("hl.device({ name = %s, enabled = %s })" % (json.dumps(n), on))
+if on == "false":
+    print("hl.config({ cursor = { invisible = true }, input = { follow_mouse = 0 } })")
+else:
+    print("hl.config({ cursor = { invisible = false } })")
+')
+
+if [ "$ON" = false ]; then
+  printf '%s\n' "$LUA" > "$F"
+  hyprctl eval "$LUA" >/dev/null
+  notify-send -a Drivewood -t 2000 "Mouse off" "Press Super + M to bring it back" || true
+else
+  rm -f "$F"
+  hyprctl eval "$LUA" >/dev/null
+  hyprctl reload >/dev/null   # back to your own mouse settings
+  notify-send -a Drivewood -t 2000 "Mouse on" || true
+fi

@@ -1,20 +1,16 @@
-# Drivewood 1.1.4
+# Drivewood 1.1.5
 
-Alt + Tab, LibreOffice, a keyboard-friendly Apps window, and two small fixes.
+Super + Tab for workspaces, Shift for going back, and Super + M to turn the mouse off.
 
 ## New
-- **Alt + Tab switches between your open apps.** A quick Alt + Tab flips back to the app you used last. Keep holding Alt and press Tab again to go further back (Shift + Alt + Tab goes the other way). A strip of your open apps shows which one you're on.
-- **LibreOffice comes with Drivewood.** Writer, Calc, Impress, Draw and the rest are in Apps under Office. Updating installs it too (it's a large download, about 300 MB).
-- **Switch Apps categories with the keyboard.** In Apps, Tab and Shift + Tab move between All, Internet, Office and the other categories. Ctrl + 1 to 6 jumps straight to one, and Ctrl + Page Up / Page Down work too.
-
-## Fixed
-- **Landscape, Settings and Tidepool have icons in Apps.** They showed empty tiles before. Each now has its own pixel-art icon.
-- **Zen no longer asks to be your default browser.** Drivewood already makes it the default, so the question on first launch is gone.
+- **Super + Tab switches workspaces.** It moves to the next workspace that has windows on it, and wraps around at the end. Super + Shift + Tab goes the other way.
+- **Shift goes backwards in Alt + Tab too.** While holding Alt, press Shift + Tab to step back through your apps. Letting go of Alt picks the highlighted app, even if you're still holding Shift.
+- **Super + M turns the mouse off.** The pointer disappears, and moving or clicking the mouse does nothing, so it can't steal focus while you type. Press Super + M again to bring it back. Logging out or restarting also brings it back.
 
 ## Good to know
 - As always, your files, apps, Settings choices, your own shortcuts and your Link sign-in all stay.
-- No new installer this time: the 1.1.2 installer ISO installs Drivewood, and the built-in updater brings it to 1.1.4.
+- No new installer this time: the 1.1.2 installer ISO installs Drivewood, and the built-in updater brings it to 1.1.5.
 
 ## Files in this release
-- `drivewood-update-1.1.4.tar.gz` (+ `.sha256`): used by the built-in updater.
+- `drivewood-update-1.1.5.tar.gz` (+ `.sha256`): used by the built-in updater.
 - `drivewood-link.apk`: DriveWood Link for Android.
