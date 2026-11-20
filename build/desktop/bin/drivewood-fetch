@@ -1,0 +1,8 @@
+#!/bin/bash
+# fastfetch sized to the terminal: the picture beside the info when there's room,
+# above it in a narrower window (like half the screen), and no picture when it's very narrow.
+c=$(tput cols 2>/dev/null || echo 120)
+if   (( c >= 118 )); then exec fastfetch "$@"
+elif (( c >= 60 ));  then exec fastfetch --logo-position top "$@"
+else                      exec fastfetch --logo none "$@"
+fi

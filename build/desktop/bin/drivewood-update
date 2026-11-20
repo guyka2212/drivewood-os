@@ -43,6 +43,11 @@ finish_steps() {  # $1 = unpacked update folder (empty when run after an older u
   if [ -z "$cur" ] || [ "$cur" = chromium.desktop ]; then
     for m in text/html application/xhtml+xml x-scheme-handler/http x-scheme-handler/https; do gio mime "$m" zen.desktop >/dev/null 2>&1 || true; done
   fi
+  # every new terminal shows fastfetch (1.1.6); added once, delete the two lines in ~/.bashrc to stop it
+  FFLINES='# ---- Drivewood: fastfetch ----
+[[ $- == *i* && -z $DRIVEWOOD_QUIET ]] && command -v drivewood-fetch >/dev/null && drivewood-fetch'
+  grep -q "# ---- Drivewood: fastfetch ----" "$HOME/.bashrc" 2>/dev/null || printf '%s\n' "$FFLINES" >> "$HOME/.bashrc"
+  grep -q "# ---- Drivewood: fastfetch ----" /etc/skel/.bashrc 2>/dev/null || printf '%s\n' "$FFLINES" | sudo tee -a /etc/skel/.bashrc >/dev/null
   echo "== your desktop files (only Drivewood's own; your changes stay)"
   for f in hypr/hyprland.lua hypr/hyprlock.conf foot/foot.ini mako/config fastfetch/config.jsonc starship.toml; do
     install -D -m 644 "/etc/skel/.config/$f" "$HOME/.config/$f"

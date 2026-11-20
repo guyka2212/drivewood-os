@@ -11,3 +11,5 @@ drivewood_greet() {
 }
 [[ $- == *i* && -z $DRIVEWOOD_QUIET ]] && drivewood_greet
 alias ff=fastfetch
+# ---- Drivewood: fastfetch ----
+[[ $- == *i* && -z $DRIVEWOOD_QUIET ]] && command -v drivewood-fetch >/dev/null && drivewood-fetch

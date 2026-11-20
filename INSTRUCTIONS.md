@@ -460,7 +460,7 @@ Same result as the first VM, but built cleanly:
 
 ### Updates and releases (GitHub)
 - **Public repo:** https://github.com/guyka2212/drivewood-os (GPL-3.0). The whole project folder is the repo; build output (`build/stage*`, `dist/`, ISOs, APKs) is left out by `.gitignore` and published as release files instead. `.gitattributes` keeps Linux line endings so the scripts run on Drivewood.
-- **Version:** `build/VERSION` (now `1.1.5`). `make_stage.sh` copies it to `/usr/share/drivewood/version` on installed systems.
+- **Version:** `build/VERSION` (now `1.1.6`). `make_stage.sh` copies it to `/usr/share/drivewood/version` on installed systems.
 - **Checking:** `drivewood-update-check` (user timer `drivewood-update-check.timer`: 2 minutes after login, then every 6 hours) asks the GitHub API for the latest release. If its tag (for example `v1.0.1`) is newer and it has a `drivewood-update-<version>.tar.gz`, it writes `~/.local/state/drivewood/update.json`. The bar then shows a small bouncing **down arrow** next to the CPU/memory bars.
 - **Updating:** clicking the arrow runs `drivewood-update` in a terminal. It:
   1. shows the release notes and asks to confirm
@@ -492,6 +492,9 @@ Same result as the first VM, but built cleanly:
   - **Super + Tab / Super + Shift + Tab** focus the next / previous workspace that has windows (`e+1` / `e-1`), same as Super + mouse wheel.
   - **Alt + Shift + Tab** steps back while the switcher is open; Alt release is also bound with Shift held (`ALT + SHIFT + Alt_L/Alt_R`, release) so letting go of Alt with Shift down still picks the app. `Switcher.qml` also treats Tab with Shift as back.
   - **Super + M** runs `drivewood-mouse`: it disables every mouse/touchpad/tablet with `hyprctl eval 'hl.device({ name = ..., enabled = false })'` and sets `cursor.invisible = true`, `input.follow_mouse = 0`. The same Lua is saved to `$XDG_RUNTIME_DIR/drivewood-mouse-off.lua`, which `hyprland.lua` loads, so the off state survives a reload but not a new login. Pressing it again re-enables the devices, deletes the file and runs `hyprctl reload` to restore the user's own mouse settings.
+
+- **1.1.6 additions:**
+  - **fastfetch in new terminals:** `bashrc-drivewood` ends with a `# ---- Drivewood: fastfetch ----` block that runs `drivewood-fetch` in interactive shells (skipped when `DRIVEWOOD_QUIET` is set). `drivewood-fetch` picks the layout from `tput cols`: logo beside the info at 118+ columns, `--logo-position top` at 60+, `--logo none` below that. The updater appends the block once to `~/.bashrc` and `/etc/skel/.bashrc` on existing installs (the main Drivewood bashrc block is only added at install time). Deleting the block stops it for good, since the updater only adds it when the marker is missing.
 
 ### Stage 6: `drivewood-installer.iso`
 - Built with archiso from the stage 5 package list (`build/packages.txt`) and configs. The installer asks for a username (no fixed name any more).
