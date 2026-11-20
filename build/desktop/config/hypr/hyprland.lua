@@ -85,9 +85,9 @@ for _, key in ipairs({ "Alt_L", "Alt_R" }) do
   hl.bind("ALT + " .. key, hl.dsp.exec_cmd(shell .. "switchDone"), { release = true })
   hl.bind("ALT + SHIFT + " .. key, hl.dsp.exec_cmd(shell .. "switchDone"), { release = true })
 end
--- Super + Tab: next workspace that has windows; add Shift to go back
-hl.bind(M .. " + TAB", hl.dsp.focus({ workspace = "e+1" }), { description = "Next workspace" })
-hl.bind(M .. " + SHIFT + TAB", hl.dsp.focus({ workspace = "e-1" }), { description = "Previous workspace" })
+-- Super + Tab: next workspace (1 to 5, wraps around, empty ones too); add Shift to go back
+hl.bind(M .. " + TAB", hl.dsp.exec_cmd("drivewood-workspace next"), { description = "Next workspace" })
+hl.bind(M .. " + SHIFT + TAB", hl.dsp.exec_cmd("drivewood-workspace prev"), { description = "Previous workspace" })
 -- Super + M: turn the mouse off / on (hides it and ignores it)
 hl.bind(M .. " + M", hl.dsp.exec_cmd("drivewood-mouse"), { description = "Mouse off / on" })
 hl.bind(M .. " + B", hl.dsp.exec_cmd("zen-browser"), { description = "Browser" })

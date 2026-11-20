@@ -1,3 +1,18 @@
 #!/bin/bash
-# drivewood-workspace N: switch to workspace N (used by the bar)
-exec hyprctl dispatch "hl.dsp.focus({ workspace = ${1:-1} })"
+# drivewood-workspace N     switch to workspace N (used by the bar)
+# drivewood-workspace next  next workspace, 1 to 5 (or further if you use more), wrapping around (Super + Tab)
+# drivewood-workspace prev  the other way (Super + Shift + Tab)
+case "$1" in
+  next|prev)
+    N=$( { hyprctl activeworkspace -j; echo; hyprctl workspaces -j; } | DIR="$1" python3 -c '
+import json, os, sys
+dec = json.JSONDecoder(); text = sys.stdin.read().strip()
+cur, i = dec.raw_decode(text); wss, _ = dec.raw_decode(text[i:].strip())
+top = max([5] + [w["id"] for w in wss if w["id"] > 0])
+c = cur.get("id", 1)
+if c < 1: c = 0 if os.environ["DIR"] == "next" else 1
+print(c % top + 1 if os.environ["DIR"] == "next" else (c - 2) % top + 1)
+')
+    exec hyprctl dispatch "hl.dsp.focus({ workspace = ${N:-1} })" ;;
+  *) exec hyprctl dispatch "hl.dsp.focus({ workspace = ${1:-1} })" ;;
+esac
