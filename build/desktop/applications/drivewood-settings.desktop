@@ -3,5 +3,5 @@ Type=Application
 Name=Settings
 Comment=Drivewood system settings
 Exec=drivewood-settings
-Icon=preferences-system
+Icon=/usr/share/icons/hicolor/256x256/apps/drivewood-settings.png
 Categories=Settings;System;

@@ -1,5 +1,9 @@
 {
   "policies": {
-    "DisableAppUpdate": true
+    "DisableAppUpdate": true,
+    "DontCheckDefaultBrowser": true,
+    "Preferences": {
+      "browser.shell.checkDefaultBrowser": { "Value": false, "Status": "locked" }
+    }
   }
 }

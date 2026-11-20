@@ -75,6 +75,12 @@ for _, key in ipairs({ "Super_L", "Super_R" }) do
 end
 hl.bind(M .. " + ALT + SPACE", hl.dsp.exec_cmd(shell .. "apps"), { description = "All apps" })
 hl.bind(M .. " + RETURN", hl.dsp.exec_cmd("foot"), { description = "Terminal" })
+-- Alt + Tab: switch between open apps (hold Alt and press Tab again to go further back)
+hl.bind("ALT + TAB", hl.dsp.exec_cmd(shell .. "switchNext"), { description = "Switch app" })
+hl.bind("ALT + SHIFT + TAB", hl.dsp.exec_cmd(shell .. "switchPrev"), { description = "Switch app (back)" })
+for _, key in ipairs({ "Alt_L", "Alt_R" }) do
+  hl.bind("ALT + " .. key, hl.dsp.exec_cmd(shell .. "switchDone"), { release = true })
+end
 hl.bind(M .. " + B", hl.dsp.exec_cmd("zen-browser"), { description = "Browser" })
 hl.bind(M .. " + E", hl.dsp.exec_cmd("nautilus --new-window"), { description = "Files" })
 hl.bind(M .. " + ALT + L", hl.dsp.exec_cmd("drivewood-link"), { description = "DriveWood Link" })

@@ -21,6 +21,7 @@ cp desktop/bashrc-drivewood $S/usr/share/drivewood/bashrc
 mkdir -p $S/usr/share/drivewood/settings $S/usr/share/applications
 cp desktop/settings/drivewood_settings.py $S/usr/share/drivewood/settings/
 cp desktop/applications/*.desktop $S/usr/share/applications/
+mkdir -p $S/usr/share/icons/hicolor/256x256/apps; cp desktop/icons/*.png $S/usr/share/icons/hicolor/256x256/apps/
 cp VERSION $S/usr/share/drivewood/version
 mkdir -p $S/usr/share/drivewood/zen; cp zen/PKGBUILD zen/zen-browser zen/zen.desktop zen/policies.json $S/usr/share/drivewood/zen/
 cp desktop/mimeapps.list $S/etc/skel/.config/mimeapps.list

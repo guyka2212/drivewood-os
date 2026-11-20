@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 
-// Drivewood shell: Driftline (bar), Tide (Super menu), Shoreline (apps).
+// Drivewood shell: Driftline (bar), Tide (Super menu), Shoreline (apps), Switcher (Alt + Tab).
 ShellRoot {
   Variants {
     model: Quickshell.screens
@@ -21,11 +21,16 @@ ShellRoot {
 
   Shoreline { id: shoreline }
 
+  Switcher { id: switcher }
+
   IpcHandler {
     target: "drivewood"
     function menu(): void { shoreline.close(); tide.toggle() }
     function apps(): void { tide.close(); shoreline.toggle() }
     function close(): void { tide.close(); shoreline.close() }
+    function switchNext(): void { tide.close(); shoreline.close(); switcher.step(1) }
+    function switchPrev(): void { tide.close(); shoreline.close(); switcher.step(-1) }
+    function switchDone(): void { switcher.done() }
     function debug(): string {
       var all = DesktopEntries.applications.values
       var sample = all.length ? (all[0].id + " noDisplay=" + all[0].noDisplay) : "none"

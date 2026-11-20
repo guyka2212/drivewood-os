@@ -43,6 +43,7 @@ PKGS=(
   python python-gobject python-cairo gtk4 openssl grim slurp wl-clipboard libnotify
   ttf-jetbrains-mono-nerd noto-fonts noto-fonts-emoji papirus-icon-theme
   qt6-wayland qt6-svg qt6-declarative
+  libreoffice-fresh
   gtk3 libxt mime-types dbus-glib nss ffmpeg
 )
 pacman -Sy --noconfirm archlinux-keyring

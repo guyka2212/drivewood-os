@@ -3,5 +3,5 @@ Type=Application
 Name=Tidepool
 Comment=Artificial life from a few simple rules
 Exec=drivewood-tidepool
-Icon=applications-science
+Icon=/usr/share/icons/hicolor/256x256/apps/drivewood-tidepool.png
 Categories=Education;Science;

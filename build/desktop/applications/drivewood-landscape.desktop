@@ -3,5 +3,5 @@ Type=Application
 Name=Landscape
 Comment=An endless landscape drifting through your terminal
 Exec=drivewood-landscape
-Icon=weather-clear-night
+Icon=/usr/share/icons/hicolor/256x256/apps/drivewood-landscape.png
 Categories=Graphics;

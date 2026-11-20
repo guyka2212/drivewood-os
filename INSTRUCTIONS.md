@@ -460,7 +460,7 @@ Same result as the first VM, but built cleanly:
 
 ### Updates and releases (GitHub)
 - **Public repo:** https://github.com/guyka2212/drivewood-os (GPL-3.0). The whole project folder is the repo; build output (`build/stage*`, `dist/`, ISOs, APKs) is left out by `.gitignore` and published as release files instead. `.gitattributes` keeps Linux line endings so the scripts run on Drivewood.
-- **Version:** `build/VERSION` (now `1.1.3`). `make_stage.sh` copies it to `/usr/share/drivewood/version` on installed systems.
+- **Version:** `build/VERSION` (now `1.1.4`). `make_stage.sh` copies it to `/usr/share/drivewood/version` on installed systems.
 - **Checking:** `drivewood-update-check` (user timer `drivewood-update-check.timer`: 2 minutes after login, then every 6 hours) asks the GitHub API for the latest release. If its tag (for example `v1.0.1`) is newer and it has a `drivewood-update-<version>.tar.gz`, it writes `~/.local/state/drivewood/update.json`. The bar then shows a small bouncing **down arrow** next to the CPU/memory bars.
 - **Updating:** clicking the arrow runs `drivewood-update` in a terminal. It:
   1. shows the release notes and asks to confirm
@@ -470,7 +470,7 @@ Same result as the first VM, but built cleanly:
   5. installs Drivewood's system files and refreshes the boot animation
   6. hands over to the **new** `drivewood-update --finish` it just installed, which rebuilds DriveWood Link, installs or updates **Zen Browser** when the pinned version changed, makes Zen the default browser (only if the default was empty or Chromium), copies only Drivewood's own desktop files (`hyprland.lua`, `hyprlock.conf`, `foot.ini`, mako, fastfetch, starship) and reloads the desktop. It writes `~/.local/state/drivewood/finished`.
   7. Updates started from 1.0.0 run the old updater, which doesn't hand over. It ends by running the new `drivewood-update-check` in its terminal, which sees `finished` is not the new version and runs `drivewood-update --finish` there.
-- **Zen Browser** replaces Chromium (1.1.2). Zen isn't in Arch's repos, so `build/zen/` is a small Drivewood package (`drivewood-zen`) that downloads the official `zen.linux-x86_64.tar.xz` from github.com/zen-browser/desktop, pinned to one version and checked against its SHA-256. To move to a newer Zen, change `pkgver` and `sha256sums` in `build/zen/PKGBUILD` (the SHA-256 is on the Zen release page, or `gh api repos/zen-browser/desktop/releases/latest`) and make a Drivewood release. Zen's own updater is turned off (`policies.json`). Updated systems keep Chromium installed (with its bookmarks) until the user removes it in Settings → Apps; new installs only have Zen.
+- **Zen Browser** replaces Chromium (1.1.2). Zen isn't in Arch's repos, so `build/zen/` is a small Drivewood package (`drivewood-zen`) that downloads the official `zen.linux-x86_64.tar.xz` from github.com/zen-browser/desktop, pinned to one version and checked against its SHA-256. To move to a newer Zen, change `pkgver` and `sha256sums` in `build/zen/PKGBUILD` (the SHA-256 is on the Zen release page, or `gh api repos/zen-browser/desktop/releases/latest`) and make a Drivewood release. Zen's own updater and its "make Zen your default browser?" question are turned off (`policies.json`; the updater also copies a changed `policies.json` into `/opt/zen-browser/distribution/`, 1.1.4). Updated systems keep Chromium installed (with its bookmarks) until the user removes it in Settings → Apps; new installs only have Zen.
 - **Nothing of the user's is removed or changed:** Documents, Pictures, Downloads, apps, `custom.lua`, Settings choices (`drivewood-settings.lua`, `settings.json`), `hypridle.conf` and the Link sign-in all stay.
 - **Making a release:**
   1. Raise `build/VERSION`.
@@ -481,6 +481,12 @@ Same result as the first VM, but built cleanly:
   gh release create v<version> dist/drivewood-update-<version>.tar.gz dist/drivewood-update-<version>.tar.gz.sha256 --title "Drivewood <version>" --notes-file RELEASE_NOTES.md
   ```
   Once the ISO exists, attach it to the release too.
+
+- **1.1.4 additions:**
+  - **Alt + Tab** (`build/desktop/shell/Switcher.qml`, binds in `hyprland.lua`): each Alt + Tab asks the shell (`qs ... ipc call drivewood switchNext` / `switchPrev`) to switch. The shell reads `hyprctl clients -j`, orders windows by most recently used and jumps to the next one at once, so a quick Alt + Tab flips between the last two apps. Holding Alt shows a strip of open apps; more Tabs move the highlight, and letting go of Alt (or 2.5 s without a press) focuses the chosen one. While the strip holds the keyboard Hyprland won't move focus, which is why only the first jump is instant. Focus uses `hyprctl dispatch 'hl.dsp.focus({ window = "address:0x..." })'`.
+  - **LibreOffice** (`libreoffice-fresh`) is in `packages.txt` and `install-base.sh`, so new installs and updates both get it. Its Start Center is hidden from Apps (`share-hidden-apps`).
+  - **App icons:** Landscape, Settings and Tidepool use Drivewood's own pixel icons in `build/desktop/icons/`, installed to `/usr/share/icons/hicolor/256x256/apps/` and referenced by full path in their `.desktop` files (the shell can't find themed icons like `preferences-system`).
+  - **Apps categories by keyboard** (`Shoreline.qml`): Tab / Shift+Tab, Ctrl+Tab, Ctrl+PgUp/PgDn cycle the category chips (`cycleCategory`), Ctrl+1..6 jumps to one. Keys are handled on the search box, which always has focus.
 
 ### Stage 6: `drivewood-installer.iso`
 - Built with archiso from the stage 5 package list (`build/packages.txt`) and configs. The installer asks for a username (no fixed name any more).

@@ -33,6 +33,10 @@ finish_steps() {  # $1 = unpacked update folder (empty when run after an older u
     sudo pacman -U --noconfirm "$Z"/drivewood-zen-*.pkg.tar.zst >/dev/null
     rm -rf "$Z"
   fi
+  # Zen's Drivewood settings (no "make Zen your default browser?" prompt) also reach existing installs
+  if [ -d /opt/zen-browser ] && ! cmp -s /usr/share/drivewood/zen/policies.json /opt/zen-browser/distribution/policies.json; then
+    sudo install -Dm644 /usr/share/drivewood/zen/policies.json /opt/zen-browser/distribution/policies.json
+  fi
   # Zen becomes the browser for links, unless you already picked a different one yourself
   local cur
   cur=$(gio mime x-scheme-handler/https 2>/dev/null | sed -n 's/^Default application[^:]*: //p')

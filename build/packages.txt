@@ -56,3 +56,4 @@ papirus-icon-theme
 qt6-wayland
 qt6-svg
 qt6-declarative
+libreoffice-fresh

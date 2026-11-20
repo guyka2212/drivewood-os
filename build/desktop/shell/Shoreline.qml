@@ -66,6 +66,12 @@ PanelWindow {
     grid.positionViewAtIndex(sel, GridView.Contain)
   }
 
+  function cycleCategory(dir) {
+    var i = 0
+    for (var k = 0; k < chips.length; k++) if (chips[k].label === category) i = k
+    category = chips[(i + dir + chips.length) % chips.length].label
+  }
+
   onQueryChanged: if (opened) refresh()
   onCategoryChanged: if (opened) refresh()
   Connections {
@@ -171,11 +177,13 @@ PanelWindow {
             else if (e.key === Qt.Key_Left) { shore.moveSel(-1); e.accepted = true }
             else if (e.key === Qt.Key_Down) { shore.moveSel(cols); e.accepted = true }
             else if (e.key === Qt.Key_Up) { shore.moveSel(-cols); e.accepted = true }
-            else if (e.key === Qt.Key_Tab) {
-              var i = 0
-              for (var k = 0; k < shore.chips.length; k++) if (shore.chips[k].label === shore.category) i = k
-              shore.category = shore.chips[(i + 1) % shore.chips.length].label
-              e.accepted = true
+            // categories without the mouse: Tab / Shift+Tab, Ctrl+Tab, Ctrl+PgUp/PgDn, Ctrl+1..6
+            else if (e.key === Qt.Key_Backtab || (e.key === Qt.Key_Tab && (e.modifiers & Qt.ShiftModifier))) { shore.cycleCategory(-1); e.accepted = true }
+            else if (e.key === Qt.Key_Tab) { shore.cycleCategory(1); e.accepted = true }
+            else if ((e.modifiers & Qt.ControlModifier) && e.key === Qt.Key_PageDown) { shore.cycleCategory(1); e.accepted = true }
+            else if ((e.modifiers & Qt.ControlModifier) && e.key === Qt.Key_PageUp) { shore.cycleCategory(-1); e.accepted = true }
+            else if ((e.modifiers & Qt.ControlModifier) && e.key >= Qt.Key_1 && e.key < Qt.Key_1 + shore.chips.length) {
+              shore.category = shore.chips[e.key - Qt.Key_1].label; e.accepted = true
             }
           }
         }
@@ -298,7 +306,7 @@ PanelWindow {
   Text {
     anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: parent.height * 0.05 }
     opacity: shore.opened ? 0.6 : 0
-    text: "type to search  ·  arrows to move  ·  tab for categories  ·  enter to launch  ·  esc to close"
+    text: "type to search  ·  arrows to move  ·  tab / shift+tab or ctrl+1–6 for categories  ·  enter to launch  ·  esc to close"
     font { family: Theme.font; pixelSize: 11 }
     color: Theme.dim
   }
