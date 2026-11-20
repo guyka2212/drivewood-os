@@ -34,7 +34,7 @@ mount --mkdir "$P1" /mnt/boot
 
 echo "== packages (this is the long part)"
 PKGS=(
-  base base-devel linux linux-firmware intel-ucode amd-ucode sudo nano git
+  base base-devel linux linux-firmware intel-ucode amd-ucode sudo nano vim git
   networkmanager bluez bluez-utils zram-generator
   limine plymouth greetd
   hyprland quickshell hyprlock hypridle swaybg xdg-desktop-portal-hyprland xdg-desktop-portal-gtk polkit

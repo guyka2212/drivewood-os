@@ -6,6 +6,7 @@ intel-ucode
 amd-ucode
 sudo
 nano
+vim
 git
 networkmanager
 bluez
